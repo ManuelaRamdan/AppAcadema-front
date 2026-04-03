@@ -42,8 +42,6 @@ export function Login() {
         try {
             const response = await loginRequest(email, password);
 
-            console.log(response.data);
-
             const { token, usuario } = response.data
 
             login(token, usuario);
