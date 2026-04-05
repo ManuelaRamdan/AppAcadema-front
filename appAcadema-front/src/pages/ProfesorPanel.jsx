@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Loading from "../components/Loading";
 import { useAuth } from "../context/AuthContext";
 import { profeGetMiInfo } from "../services/profeService";
+import AlumnoAcordeon from '../components/Alumno/AlumnoAcordeon';
 
 export default function ProfesorPanel() {
     const { logout, user } = useAuth();
@@ -96,8 +97,8 @@ export default function ProfesorPanel() {
                                     key={m._id}
                                     onClick={() => seleccionarMateria(m)}
                                     className={`w-full py-2 px-4 rounded-lg font-semibold transition-all text-left ${materiaSelecccionada?._id === m._id
-                                            ? "bg-color2 text-color5 shadow-md"
-                                            : "hover:bg-slate-800 text-slate-300"
+                                        ? "bg-color2 text-color5 shadow-md"
+                                        : "hover:bg-slate-800 text-slate-300"
                                         }`}
                                 >
                                     {m.nombreMateria} {m.nivel} {m.division} {m.anio}
@@ -117,7 +118,20 @@ export default function ProfesorPanel() {
                 <main className="flex-1 ml-64 p-8">
                     <div className="max-w-6xl mx-auto">
 
-                        <p className="text-color5">No se encontró información del alumno.</p>
+                        {loading ? (
+                            <Loading />
+                        ) : alumnosFiltrados.length > 0 ? (
+                            alumnosFiltrados.map((alumno) => (
+                                <AlumnoAcordeon
+                                    key={alumno._id}
+                                    alumno={alumno}
+                                    materiaSeleccionada={materiaSelecccionada}
+                                />
+                            ))
+                        
+                        ) : (
+                            <p className="text-color5">No se encontró información del alumno.</p>
+                        )}
                     </div>
                 </main>
 
