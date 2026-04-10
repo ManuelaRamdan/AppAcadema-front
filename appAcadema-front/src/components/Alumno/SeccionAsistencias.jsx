@@ -1,6 +1,8 @@
-
+import { useEffect, useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 
 export default function SeccionAsistencias({ asistencias, editMode, onChange }) {
+    const [filaAEliminar, setFilaAEliminar] = useState(null);
 
     const handleCambioAsistencia = (index, campo, valor) => {
         const nuevasAsistencias = asistencias.map((n, i) =>
@@ -50,6 +52,19 @@ export default function SeccionAsistencias({ asistencias, editMode, onChange }) 
 
 
     };
+
+    const eliminarFila = (index) => {
+        setFilaAEliminar(index);
+
+    }
+
+
+    const confirmarEliminar = () => {
+        const nuevasNotas = asistencias.filter((n, i) => i !== filaAEliminar);
+        onChange(nuevasNotas);
+        setFilaAEliminar(null);
+    }
+
     return (
         <>
             {asistencias.length > 0 ? (
@@ -68,6 +83,7 @@ export default function SeccionAsistencias({ asistencias, editMode, onChange }) 
                             <tr>
                                 <th className="p-2 font-semibold">Fecha</th>
                                 <th className="p-2 font-semibold">Presente</th>
+                                {editMode && <th className="th-accion"></th>}
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
@@ -90,8 +106,8 @@ export default function SeccionAsistencias({ asistencias, editMode, onChange }) 
                                         {editMode ? (
 
 
-                                                
-                                            <select value={n.presente} onChange={(e) => handleCambioAsistencia(index, "presente", e.target.value) } className="input-tabla">
+
+                                            <select value={n.presente} onChange={(e) => handleCambioAsistencia(index, "presente", e.target.value)} className="input-tabla">
                                                 <option value="presente">Presente</option>
                                                 <option value="ausente">Ausente</option>
                                                 <option value="feriado">Feriado</option>
@@ -101,13 +117,44 @@ export default function SeccionAsistencias({ asistencias, editMode, onChange }) 
                                             n.presente
                                         )}
                                     </td>
+                                    <td>
+                                        {editMode && (
+                                            <button onClick={() => eliminarFila(index)}>
+                                                <FaTrashAlt size={14} />
+                                            </button>
+
+
+
+                                        )}
+
+
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div >
-            ) : null
-            }
+            ) : (
+                !editMode ? <p>No tiene asistencia</p> : (
+                    <div>
+                        <button onClick={() => onChange([...asistencias, { fecha: '', presente: 'presente' }])}>
+                            + Nueva Asistencia
+                        </button>
+                    </div>
+                )
+
+            )}
+
+            {filaAEliminar !== null && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">  {/* fondo oscuro */}
+                    <div className="bg-white rounded-xl p-6 shadow-xl">
+                        <p>¿Eliminar esta nota?</p>
+                        <button onClick={confirmarEliminar}>Confirmar</button>
+                        <button onClick={() => setFilaAEliminar(null)}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+
         </>
 
     );

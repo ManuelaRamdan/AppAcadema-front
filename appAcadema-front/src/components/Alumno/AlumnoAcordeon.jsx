@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SeccionNotas from "./SeccionNotas";
 import SeccionAsistencias from "./SeccionAsistencias";
 import './alumnoAcordeon.css';
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 
 import { actualizarNotasAsistenciasDelAlumno } from "../../services/profeService";
@@ -11,13 +12,15 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
     const [isOpen, setIsOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
+    const [notificationMessage, setNotificationMessage] = useState({ type: '', message: '' });
+    
+
     const [datosTemporales, setDatosTemporales] = useState({
         notas: alumno.notas,
         asistencias: alumno.asistencias
     });
 
-    const [notificationMessage, setNotificationMessage] = useState({ type: '', message: '' });
-
+    
     const handleGuardar = async () => {
         
         const payload = [{
@@ -53,6 +56,7 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
 
 
     }
+    
     const handleCancelar = () => {
         setDatosTemporales({
             notas: alumno.notas,
@@ -84,8 +88,13 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
 
     }, [notificationMessage]);
 
+    
+
+    
     return (
         <div className="border rounded-xl mb-4 bg-white shadow-sm">
+
+            
             <div
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-4 cursor-pointer flex justify-between"
@@ -97,6 +106,9 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
 
             {isOpen && (
                 <div>
+
+                    <p><strong>DNI:</strong> {alumno?.dni ?? "N/A"}</p>
+
                     <div >
                         {notificationMessage.message && (
                             <div className={`notification-box ${getNotificationClass(notificationMessage.type)}`}>
@@ -104,31 +116,47 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
                             </div>
                         )}
                     </div>
+
                     <div>
-                        {editMode ? (
-                            <>
-                                <button onClick={handleGuardar}>Guardar</button>
-                                <button onClick={handleCancelar}>Cancelar</button>
-                            </>
-                        ) : (
-                            <button onClick={() => setEditMode(true)}>Editar</button>
+                        {!editMode && (
+                        
+                            <button onClick={() => setEditMode(true)}>
+                                <FaEdit size={16} className="btn-icon-right" /> Editar Notas/Asistencias
+                            </button>
                         )}
                     </div>
 
-                    <SeccionNotas
-                        notas={datosTemporales.notas}
-                        editMode={editMode}
-                        onChange={(nuevasNotas) => setDatosTemporales({ ...datosTemporales, notas: nuevasNotas })}
-                    />
-                    <SeccionAsistencias
-                        asistencias={datosTemporales.asistencias}
-                        editMode={editMode}
-                        onChange={(nuevasAsistencias) => setDatosTemporales({ ...datosTemporales, asistencias: nuevasAsistencias })}
-                    />
+           
+                         <SeccionNotas
+                         notas={datosTemporales.notas}
+                         editMode={editMode}
+                         onChange={(nuevasNotas) => setDatosTemporales({ ...datosTemporales, notas: nuevasNotas })}
+                     />
 
-                    <hr className="my-6" />
+                
 
+                
+                         <SeccionAsistencias
+                         asistencias={datosTemporales.asistencias}
+                         editMode={editMode}
+                         onChange={(nuevasAsistencias) => setDatosTemporales({ ...datosTemporales, asistencias: nuevasAsistencias })}
+                        />
 
+                
+
+                   
+                
+
+                    {editMode && (
+                        <div>
+                            <button onClick={handleCancelar}>
+                                Cancelar
+                            </button>
+                            <button onClick={handleGuardar}>
+                                Guardar cambios
+                            </button>
+                        </div>
+                    )}
 
                 </div>
 

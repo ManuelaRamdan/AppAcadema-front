@@ -5,7 +5,8 @@ import React, { useEffect, useState } from 'react';
 import Loading from "../components/Loading";
 import { useAuth } from "../context/AuthContext";
 import { profeGetMiInfo } from "../services/profeService";
-import AlumnoAcordeon from '../components/Alumno/AlumnoAcordeon';
+
+import AlumnoMateria from '../components/Alumno/AlumnoMateria';
 
 export default function ProfesorPanel() {
     const { logout, user } = useAuth();
@@ -18,7 +19,7 @@ export default function ProfesorPanel() {
     const [materiaSelecccionada, setMateriaSelecccionada] = useState(null);
 
     const [filtroMateria, setFiltroMateria] = useState("");
-    const [filtroAlumno, setFiltroAlumno] = useState("");
+    
 
     const cargar = async () => {
         try {
@@ -48,9 +49,7 @@ export default function ProfesorPanel() {
         setAlumnos(m.alumnos || []);
     }
 
-    const alumnosFiltrados = alumnos.filter((al) =>
-        al.nombre.toLowerCase().includes(filtroAlumno.toLowerCase())
-    );
+    
 
     useEffect(() => {
 
@@ -111,7 +110,7 @@ export default function ProfesorPanel() {
                         </div>
                     </div>
                     <button onClick={logout}
-                        className="bg-color3 hover:bg-opacity-90 text-white py-2 px-4 rounded-lg font-bold transition-all w-full"
+                        className="bg-color3 hover:bg-opacity-90 text-black py-2 px-4 rounded-lg font-bold transition-all w-full"
                     >Cerrar Sesión</button>
                 </aside>
 
@@ -120,17 +119,17 @@ export default function ProfesorPanel() {
 
                         {loading ? (
                             <Loading />
-                        ) : alumnosFiltrados.length > 0 ? (
-                            alumnosFiltrados.map((alumno) => (
-                                <AlumnoAcordeon
-                                    key={alumno._id}
-                                    alumno={alumno}
+                        ) : materiaSelecccionada ? (
+
+
+                            <AlumnoMateria
+                                    key={profesor._id}
                                     materiaSeleccionada={materiaSelecccionada}
+                                    profesor={profesor}
                                 />
-                            ))
                         
                         ) : (
-                            <p className="text-color5">No se encontró información del alumno.</p>
+                            <p className="text-color5">No se encontró información del la materia.</p>
                         )}
                     </div>
                 </main>
