@@ -13,10 +13,10 @@ export default function AlumnoMateria({ materiaSeleccionada, profesor }) {
 
 
     return (
-        <div className="bg-white rounded-3xl shadow-custom p-8 border border-white">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-custom p-4 md:p-8 border border-white">
             <header className="mb-6">
-                <h1 className="text-4xl font-bold text-color5">{profesor.nombre}</h1>
-                <h3 className="text-2xl font-bold text-color3 text-center mt-4 mb-6">
+                <h1 className="text-2xl md:text-4xl font-bold text-color5 text-center md:text-left break-words">{profesor.nombre}</h1>
+                <h3 className="text-lg md:text-2xl font-bold text-color3 text-center md:text-left mt-2 md:mt-4 mb-4 md:mb-6">
                     {materiaSeleccionada.nombreMateria} {materiaSeleccionada.nivel}{materiaSeleccionada.division} {materiaSeleccionada.anio}
                 </h3>
             </header>

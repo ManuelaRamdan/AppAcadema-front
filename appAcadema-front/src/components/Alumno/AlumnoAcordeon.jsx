@@ -97,7 +97,7 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
 
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className={`p-4 cursor-pointer transition-colors flex justify-between items-center ${isOpen ? "bg-color2" : "bg-color4 hover:bg-color2"}`}
+                className={`p-3 md:p-4 cursor-pointer transition-colors flex justify-between items-center ${isOpen ? "bg-color2" : "bg-color4 hover:bg-color2"}`}
             >
                 <span className="font-bold text-color5">{alumno.nombre}</span>
                 <span className="text-color5">{isOpen ? '▲' : '▼'}</span>
@@ -105,7 +105,7 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
             </div>
 
             {isOpen && (
-                <div className="p-6 bg-white animate-fadeIn">
+                <div className="p-4 md:p-6 bg-white animate-fadeIn">
 
                     <p className="text-color5 font-medium mb-4"><strong>DNI:</strong> {alumno?.dni ?? "N/A"}</p>
 
@@ -149,7 +149,7 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
 
 
                     {editMode && (
-                        <div className="flex gap-4 mt-6 justify-end">
+                        <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-4 mt-6 justify-end">
                             <button onClick={handleCancelar}
                                 className="px-6 py-2 rounded-lg font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
                             >

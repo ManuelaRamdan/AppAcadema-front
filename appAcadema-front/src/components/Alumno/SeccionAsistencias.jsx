@@ -73,7 +73,7 @@ export default function SeccionAsistencias({ asistencias, editMode, onChange }) 
                 <div className="flex justify-between items-end mb-2">
                     <h4 className="font-bold text-color5">Asistencias</h4>
                     {editMode && asistencias.length > 0 && (
-                        <button 
+                        <button
                             onClick={() => onChange([...asistencias, { fecha: '', presente: 'presente' }])}
                             className="bg-color2 text-color5 font-semibold py-1 px-4 rounded-lg hover:bg-color3 hover:text-white transition-colors text-sm"
                         >
@@ -83,68 +83,70 @@ export default function SeccionAsistencias({ asistencias, editMode, onChange }) 
                 </div>
 
                 {asistencias.length > 0 ? (
-                    <table className="w-full text-center rounded-lg overflow-hidden border-collapse shadow-sm">
-                        <thead className="bg-color3 text-white">
-                            <tr>
-                                <th className="p-2 font-semibold">Fecha</th>
-                                <th className="p-2 font-semibold">Estado</th>
-                                {editMode && <th className="p-2 w-10"></th>}
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100 border border-gray-100">
-                            {asistencias.map((n, index) => (
-                                <tr key={n._id || index} className="hover:bg-slate-50 transition-colors">
-                                    <td className="p-2">
-                                        {editMode ? (
-                                            <input
-                                                type="datetime-local"
-                                                value={getDatetimeLocalValue(n.fecha)}
-                                                onChange={(e) => handleCambioAsistencia(index, "fecha", e.target.value)}
-                                                className={inputStyle}
-                                            />
-                                        ) : (
-                                            <span className="text-gray-600">{getFixedDateDisplay(n.fecha)}</span>
-                                        )}
-                                    </td>
-                                    <td className="p-2">
-                                        {editMode ? (
-                                            <select 
-                                                value={n.presente} 
-                                                onChange={(e) => handleCambioAsistencia(index, "presente", e.target.value)} 
-                                                className={inputStyle}
-                                            >
-                                                <option value="presente">Presente</option>
-                                                <option value="ausente">Ausente</option>
-                                                <option value="feriado">Feriado</option>
-                                                <option value="paro">Paro</option>
-                                            </select>
-                                        ) : (
-                                            <span className={`font-medium ${n.presente === 'presente' ? 'text-color3' : (n.presente === 'ausente' ? 'text-red-500' : 'text-gray-600')}`}>
-                                                {n.presente ? n.presente.charAt(0).toUpperCase() + n.presente.slice(1) : ''}
-                                            </span>
-                                        )}
-                                    </td>
-                                    {editMode && (
-                                        <td className="p-2">
-                                            <button 
-                                                onClick={() => eliminarFila(index)}
-                                                className="text-red-500 hover:text-red-700 transition-colors flex items-center justify-center w-full"
-                                                title="Eliminar"
-                                            >
-                                                <FaTrashAlt size={16} />
-                                            </button>
-                                        </td>
-                                    )}
+                    <div className="overflow-x-auto pb-2">
+                        <table className="w-full min-w-[350px] md:min-w-full text-center rounded-lg overflow-hidden border-collapse shadow-sm">
+                            <thead className="bg-color3 text-white">
+                                <tr>
+                                    <th className="p-2 font-semibold">Fecha</th>
+                                    <th className="p-2 font-semibold">Estado</th>
+                                    {editMode && <th className="p-2 w-10"></th>}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100 border border-gray-100">
+                                {asistencias.map((n, index) => (
+                                    <tr key={n._id || index} className="hover:bg-slate-50 transition-colors">
+                                        <td className="p-2">
+                                            {editMode ? (
+                                                <input
+                                                    type="datetime-local"
+                                                    value={getDatetimeLocalValue(n.fecha)}
+                                                    onChange={(e) => handleCambioAsistencia(index, "fecha", e.target.value)}
+                                                    className={inputStyle}
+                                                />
+                                            ) : (
+                                                <span className="text-gray-600">{getFixedDateDisplay(n.fecha)}</span>
+                                            )}
+                                        </td>
+                                        <td className="p-2">
+                                            {editMode ? (
+                                                <select
+                                                    value={n.presente}
+                                                    onChange={(e) => handleCambioAsistencia(index, "presente", e.target.value)}
+                                                    className={inputStyle}
+                                                >
+                                                    <option value="presente">Presente</option>
+                                                    <option value="ausente">Ausente</option>
+                                                    <option value="feriado">Feriado</option>
+                                                    <option value="paro">Paro</option>
+                                                </select>
+                                            ) : (
+                                                <span className={`font-medium ${n.presente === 'presente' ? 'text-color3' : (n.presente === 'ausente' ? 'text-red-500' : 'text-gray-600')}`}>
+                                                    {n.presente ? n.presente.charAt(0).toUpperCase() + n.presente.slice(1) : ''}
+                                                </span>
+                                            )}
+                                        </td>
+                                        {editMode && (
+                                            <td className="p-2">
+                                                <button
+                                                    onClick={() => eliminarFila(index)}
+                                                    className="text-red-500 hover:text-red-700 transition-colors flex items-center justify-center w-full"
+                                                    title="Eliminar"
+                                                >
+                                                    <FaTrashAlt size={16} />
+                                                </button>
+                                            </td>
+                                        )}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 ) : (
                     <div className="bg-gray-50 border border-gray-100 rounded-lg p-4 text-center">
                         {!editMode ? (
                             <p className="text-gray-500 text-sm italic">No tiene asistencias cargadas.</p>
                         ) : (
-                            <button 
+                            <button
                                 onClick={() => onChange([...asistencias, { fecha: '', presente: 'presente' }])}
                                 className="bg-color2 text-color5 font-semibold py-2 px-6 rounded-lg hover:bg-color3 hover:text-white transition-colors"
                             >
@@ -161,14 +163,14 @@ export default function SeccionAsistencias({ asistencias, editMode, onChange }) 
                         <h3 className="text-lg font-bold text-color5 mb-2">Eliminar Asistencia</h3>
                         <p className="text-gray-600 mb-6">¿Estás seguro que deseas eliminar esta asistencia?</p>
                         <div className="flex gap-4 justify-center">
-                            <button 
-                                onClick={() => setFilaAEliminar(null)} 
+                            <button
+                                onClick={() => setFilaAEliminar(null)}
                                 className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors"
                             >
                                 Cancelar
                             </button>
-                            <button 
-                                onClick={confirmarEliminar} 
+                            <button
+                                onClick={confirmarEliminar}
                                 className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition-colors"
                             >
                                 Confirmar
