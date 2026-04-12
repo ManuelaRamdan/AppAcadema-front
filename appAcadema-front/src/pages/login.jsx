@@ -60,8 +60,8 @@ export function Login() {
 
     return (
 
-        <div className="min-h-screen flex items-center justify-center bg-color1 p-5">
-            <div className="w-full max-w-[420px] bg-white p-8 rounded-[18px] border border-color2 shadow-custom">
+        <div className="min-h-screen flex items-center justify-center bg-color1 p-4 sm:p-5">
+            <div className="w-full max-w-[420px] bg-white p-6 sm:p-8 rounded-[18px] border border-color2 shadow-custom">
                 <h2 className="text-center text-2xl font-bold text-color5 mb-5">Iniciar sesion</h2>
 
                 {sessionExpired &&
@@ -80,7 +80,7 @@ export function Login() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full p-3 rounded-xl border-2 border-color3 mb-4 focus:border-color4 focus:bg-[#f6fbe9] outline-none transition-all"
+                        className="w-full p-3 rounded-xl border-2 border-color3 mb-4 focus:border-color4 focus:bg-[#f6fbe9] outline-none transition-all text-sm sm:text-base"
                     />
                     <input
                         type="password"
