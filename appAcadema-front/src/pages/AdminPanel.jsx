@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Loading from "../components/Loading";
 import { useAuth } from "../context/AuthContext";
 import MateriaPanel from '../components/Admin/Materia/MateriaPanel';
+import PadrePanelAdmin from '../components/Admin/padre/PadrePanelAdmin';
 
 const SECCIONES = [
     { id: "usuarios", nombre: "Usuarios" },
@@ -26,7 +27,7 @@ const renderContent = (seccion) => {
             return <p>Panel de Usuarios (próximamente)</p>;
 
         case "padres":
-            return <p>Panel de Usuarios (próximamente)</p>;
+            return <PadrePanelAdmin />;
         default: return <p>Seleccioná una sección</p>;
     }
 }

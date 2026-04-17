@@ -67,9 +67,7 @@ export default function MateriaPanel() {
     if (error) return <p className="error text-red-500 font-bold p-4 text-center">{error}</p>;
 
     return (
-        /* Eliminamos el <main> y el <div flex> aquí porque AdminPanel ya los tiene. 
-           Solo retornamos la tarjeta blanca (igual que AlumnoInfo) */
-        <div className="bg-white rounded-2xl md:rounded-3xl shadow-custom p-4 md:p-8 border border-white min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-4rem)] flex flex-col">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-custom p-4 md:p-8 border border-white">
             
             <header className="mb-6">
                 <h1 className="text-2xl md:text-3xl font-bold text-color3 text-center">
@@ -87,8 +85,7 @@ export default function MateriaPanel() {
                 />
             </div>
 
-            {/* Este div ocupa el espacio libre restante y empuja la paginación abajo */}
-            <div className="space-y-4 flex-1">
+            <div className="space-y-4">
                 {materiasFiltradasPagina.length > 0 ? (
                     materiasFiltradasPagina.map((materia) => (
                         <MateriaAcordeon
@@ -105,13 +102,12 @@ export default function MateriaPanel() {
                 )}
             </div>
 
-            {/* Paginación */}
             {filtroMateria.length === 0 && paginacion && (
-                <div className="flex flex-row gap-4 mt-8 pt-4 border-t border-gray-100">
+                <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-gray-100">
                     <button
                         onClick={() => cargar(paginacion.prevPage)}
                         disabled={paginacion.prevPage === null}
-                        className={`flex-1 px-6 py-3 rounded-xl font-bold transition-colors ${
+                        className={`w-full sm:flex-1 px-6 py-3 rounded-xl font-bold transition-colors ${
                             paginacion.prevPage === null
                                 ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -123,7 +119,8 @@ export default function MateriaPanel() {
                     <button
                         onClick={() => cargar(paginacion.nextPage)}
                         disabled={paginacion.nextPage === null}
-                        className={`flex-1 px-6 py-3 rounded-xl font-bold transition-colors ${
+                        /* Agregamos w-full para celulares y sm:flex-1 para PC */
+                        className={`w-full sm:flex-1 px-6 py-3 rounded-xl font-bold transition-colors ${
                             paginacion.nextPage === null
                                 ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                                 : "bg-color2 text-color5 hover:bg-opacity-90"
