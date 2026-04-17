@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Loading from "../components/Loading";
 import { useAuth } from "../context/AuthContext";
+import MateriaPanel from '../components/Admin/Materia/MateriaPanel';
 
 const SECCIONES = [
     { id: "usuarios", nombre: "Usuarios" },
@@ -16,7 +17,7 @@ const renderContent = (seccion) => {
         case "usuarios":
             return <p>Panel de Usuarios (próximamente)</p>;
         case "materias":
-            return <p>Panel de Usuarios (próximamente)</p>;
+            return <MateriaPanel />;
         case "cursos":
             return <p>Panel de Usuarios (próximamente)</p>;
         case "profesores":
