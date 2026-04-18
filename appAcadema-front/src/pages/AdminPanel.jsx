@@ -3,7 +3,8 @@ import Loading from "../components/Loading";
 import { useAuth } from "../context/AuthContext";
 import MateriaPanel from '../components/Admin/Materia/MateriaPanel';
 import PadrePanelAdmin from '../components/Admin/padre/PadrePanelAdmin';
-import CusoPanel from '../components/Admin/Curso/CursoPanel';
+import CursoPanel from '../components/Admin/Curso/CursoPanel';
+import ProfePanel from '../components/Admin/Profesor/ProfesorPanelAdmin';
 
 const SECCIONES = [
     { id: "usuarios", nombre: "Usuarios" },
@@ -21,9 +22,9 @@ const renderContent = (seccion) => {
         case "materias":
             return <MateriaPanel />;
         case "cursos":
-            return <CusoPanel />;
-        case "profesores":
-            return <p>Panel de Usuarios (próximamente)</p>;
+            return <CursoPanel />;
+            case "profesores":
+            return <ProfePanel />;
         case "alumnos":
             return <p>Panel de Usuarios (próximamente)</p>;
 
