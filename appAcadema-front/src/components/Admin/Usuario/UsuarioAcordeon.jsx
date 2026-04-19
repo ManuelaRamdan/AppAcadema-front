@@ -18,11 +18,11 @@ export default function UsuarioAcordeon({ usuario, isOpen, onToggle }) {
             {isOpen && (
                 <div className="p-4 md:p-6 bg-white animate-fadeIn">
 
-                    <p className="text-color5 font-medium mb-4"><strong>ID usuario:</strong> {usuario._id}</p>
-                    <p className="text-color5 font-medium mb-4"><strong>Email:</strong> {usuario.email}</p>
+                    <p className="text-color5 font-medium mb-4 break-all"><strong>ID usuario:</strong> {usuario._id}</p>
+                    <p className="text-color5 font-medium mb-4 break-words"><strong>Email:</strong> {usuario.email}</p>
                     <p className="text-color5 font-medium mb-4"><strong>Rol:</strong> {usuario.rol}</p>
                     {usuario.profesorId && (
-                        <p><strong>ID Profesor:</strong> <span> {usuario.profesorId}</span></p>
+                        <p  className="text-color5 font-medium mb-4 break-all"><strong>ID Profesor:</strong> <span> {usuario.profesorId}</span></p>
                     )}
 
                     {usuario.hijos && (

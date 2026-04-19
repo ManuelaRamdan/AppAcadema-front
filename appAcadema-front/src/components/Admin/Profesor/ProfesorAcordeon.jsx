@@ -19,19 +19,19 @@ export default function ProfesorAcordeon({ profesor, isOpen, onToggle }) {
 
             {isOpen && (
                 <div className="p-4 md:p-6 bg-white animate-fadeIn">
-                    <p className="text-color5 font-medium mb-4"><strong>ID:</strong> {profesor._id}</p>
+                    <p className="text-color5 font-medium mb-4 break-all"><strong>ID:</strong> {profesor._id}</p>
 
                     {profesor.materiasDictadas && (
                         <div className="text-color5 font-medium mb-4">
                             <strong>Materias Dictadas ({profesor.materiasDictadas?.length || 0})</strong>
                             {profesor.materiasDictadas.length > 0 ? (
-                                <ul className="list-disc ml-6 mt-2"> {/* Agregué un poco de margen y estilo de lista para que se vea mejor */}
+                                <div className="space-y-4 mt-3">
                                     {profesor.materiasDictadas.map((materia) => (
                                         <MateriaProfesorDetalle
                                             materiaCurso={materia}
                                         />
                                     ))}
-                                </ul>
+                                </div>
                             ) : (
                                 <p className="text-center py-10 text-gray-500 font-medium">Ningún alumno asociado</p>
                             )}

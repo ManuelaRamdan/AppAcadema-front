@@ -40,13 +40,13 @@ export default function MateriaProfesorDetalle({ materiaCurso }) {
 
             {isOpen && (
                 <div className="p-4 md:p-6 bg-white animate-fadeIn">
-                    <p className="text-color5 font-medium mb-4"><strong>ID:</strong> {materiaCurso._id}</p>
+                    <p className="text-color5 font-medium mb-4 break-all"><strong>ID:</strong> {materiaCurso._id}</p>
 
                     {materiaCurso.alumnos && (
                         <div className="text-color5 font-medium mb-4">
                             <strong>Alumnos</strong>
                             {materiaCurso.alumnos.length > 0 ? (
-                                <ul className="list-disc ml-6 mt-2">
+                                <div className="space-y-4 mt-2">
                                     {materiaCurso.alumnos.map((alumno) => (
 
                                         <div key={alumno.dni}>
@@ -64,64 +64,81 @@ export default function MateriaProfesorDetalle({ materiaCurso }) {
 
                                                     <div className="mb-6">
                                                         <h4 className="font-bold text-color5 mb-2">Notas</h4>
-                                                        <div className="overflow-x-auto">
-                                                            <table className="w-full text-center rounded-lg overflow-hidden border-collapse min-w-[250px]"> {/* Cambio a text-center */}
-                                                                <thead className="bg-color3 text-white">
-                                                                    <tr>
-                                                                        <th className="p-2 font-semibold">Tipo</th>
-                                                                        <th className="p-2 font-semibold">Nota</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody className="divide-y divide-gray-100">
-                                                                    {alumno.notas.map(n => (
-                                                                        <tr key={n._id} className="hover:bg-slate-50 transition-colors">
-                                                                            <td className="p-2 text-gray-600 italic">{n.tipo}</td>
-                                                                            <td className="p-2 font-bold text-color5">{n.nota}</td> {/* Quitamos pr-10 y text-right */}
+                                                        {alumno.notas.length > 0 ? (
+
+                                                            <div className="overflow-x-auto">
+                                                                <table className="w-full text-center rounded-lg overflow-hidden border-collapse min-w-[250px]"> {/* Cambio a text-center */}
+                                                                    <thead className="bg-color3 text-white">
+                                                                        <tr>
+                                                                            <th className="p-2 font-semibold">Tipo</th>
+                                                                            <th className="p-2 font-semibold">Nota</th>
                                                                         </tr>
-                                                                    ))}
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                                                    </thead>
+                                                                    <tbody className="divide-y divide-gray-100">
+                                                                        {alumno.notas.map(n => (
+                                                                            <tr key={n._id} className="hover:bg-slate-50 transition-colors">
+                                                                                <td className="p-2 text-gray-600 italic">{n.tipo}</td>
+                                                                                <td className="p-2 font-bold text-color5">{n.nota}</td> {/* Quitamos pr-10 y text-right */}
+                                                                            </tr>
+                                                                        ))}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="bg-gray-50 border border-gray-100 rounded-lg p-4 text-center">
+
+                                                                <p className="text-gray-500 text-sm italic">No tiene notas cargadas.</p>
+
+                                                            </div>
+                                                        )}
                                                     </div>
 
-                                                    {/* Tabla de Asistencias */}
                                                     <div>
                                                         <h4 className="font-bold text-color5 mb-2">Asistencias</h4>
-                                                        <div className="overflow-x-auto">
-                                                            <table className="w-full text-center rounded-lg overflow-hidden border-collapse min-w-[250px]"> {/* Cambio a text-center */}
-                                                                <thead className="bg-color3 text-white">
-                                                                    <tr>
-                                                                        <th className="p-2 font-semibold">Fecha</th>
-                                                                        <th className="p-2 font-semibold">Presente</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody className="divide-y divide-gray-100">
-                                                                    {alumno.asistencias.map(a => (
-                                                                        <tr key={a._id} className="hover:bg-slate-50 transition-colors">
-                                                                            <td className="p-2 text-gray-600">{getFixedDateDisplay(a.fecha)}</td>
-                                                                            <td className="p-2 font-medium text-color5">{a.presente}</td> {/* Quitamos pr-10 y text-right */}
+                                                        {alumno.asistencias.length > 0 ? (
+                                                            <div className="overflow-x-auto">
+                                                                <table className="w-full text-center rounded-lg overflow-hidden border-collapse min-w-[250px]"> {/* Cambio a text-center */}
+                                                                    <thead className="bg-color3 text-white">
+                                                                        <tr>
+                                                                            <th className="p-2 font-semibold">Fecha</th>
+                                                                            <th className="p-2 font-semibold">Presente</th>
                                                                         </tr>
-                                                                    ))}
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                                                    </thead>
+                                                                    <tbody className="divide-y divide-gray-100">
+                                                                        {alumno.asistencias.map(a => (
+                                                                            <tr key={a._id} className="hover:bg-slate-50 transition-colors">
+                                                                                <td className="p-2 text-gray-600">{getFixedDateDisplay(a.fecha)}</td>
+                                                                                <td className="p-2 font-medium text-color5">{a.presente}</td> {/* Quitamos pr-10 y text-right */}
+                                                                            </tr>
+                                                                        ))}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="bg-gray-50 border border-gray-100 rounded-lg p-4 text-center">
+
+                                                                <p className="text-gray-500 text-sm italic">No tiene asistencias cargadas.</p>
+
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
                                             )}
                                         </div>
                                     ))}
-                                </ul>
+                                </div>
                             ) : (
                                 <p className="text-center py-10 text-gray-500 font-medium">Ningún alumno asociado</p>
                             )}
                         </div>
-                    )}
-                </div>
+                    )
+                    }
+                </div >
 
 
             )
             }
 
 
-        </div>)
+        </div >)
 }
