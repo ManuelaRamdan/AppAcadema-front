@@ -84,7 +84,6 @@ export default function AlumnoInfo({ alumno }) {
                                             <p className="text-gray-700">{mat.profesor?.nombre || "No asignado"}</p>
                                         </div>
 
-                                        {/* Tabla de Notas */}
                                         <div className="mb-6">
                                             <h4 className="font-bold text-color5 mb-2">Notas</h4>
                                             <div className="overflow-x-auto">
@@ -99,7 +98,7 @@ export default function AlumnoInfo({ alumno }) {
                                                         {mat.notas.map(n => (
                                                             <tr key={n._id} className="hover:bg-slate-50 transition-colors">
                                                                 <td className="p-2 text-gray-600 italic">{n.tipo}</td>
-                                                                <td className="p-2 font-bold text-color5">{n.nota}</td> {/* Quitamos pr-10 y text-right */}
+                                                                <td className="p-2 font-bold text-color5">{n.nota}</td> 
                                                             </tr>
                                                         ))}
                                                     </tbody>
@@ -107,7 +106,6 @@ export default function AlumnoInfo({ alumno }) {
                                             </div>
                                         </div>
 
-                                        {/* Tabla de Asistencias */}
                                         <div>
                                             <h4 className="font-bold text-color5 mb-2">Asistencias</h4>
                                             <div className="overflow-x-auto">
@@ -122,7 +120,7 @@ export default function AlumnoInfo({ alumno }) {
                                                         {mat.asistencias.map(a => (
                                                             <tr key={a._id} className="hover:bg-slate-50 transition-colors">
                                                                 <td className="p-2 text-gray-600">{getFixedDateDisplay(a.fecha)}</td>
-                                                                <td className="p-2 font-medium text-color5">{a.presente}</td> {/* Quitamos pr-10 y text-right */}
+                                                                <td className="p-2 font-medium text-color5">{a.presente}</td> 
                                                             </tr>
                                                         ))}
                                                     </tbody>

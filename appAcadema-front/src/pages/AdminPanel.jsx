@@ -5,6 +5,7 @@ import MateriaPanel from '../components/Admin/Materia/MateriaPanel';
 import PadrePanelAdmin from '../components/Admin/padre/PadrePanelAdmin';
 import CursoPanel from '../components/Admin/Curso/CursoPanel';
 import ProfePanel from '../components/Admin/Profesor/ProfesorPanelAdmin';
+import UsuarioPanel from '../components/Admin/Usuario/UsuarioPanel';
 
 const SECCIONES = [
     { id: "usuarios", nombre: "Usuarios" },
@@ -18,7 +19,7 @@ const SECCIONES = [
 const renderContent = (seccion) => {
     switch (seccion) {
         case "usuarios":
-            return <p>Panel de Usuarios (próximamente)</p>;
+            return <UsuarioPanel />;
         case "materias":
             return <MateriaPanel />;
         case "cursos":

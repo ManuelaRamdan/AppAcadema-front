@@ -46,7 +46,7 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
                 setNotificationMessage({ type: 'success', message: 'Se guardo exitosamente' });
                 setEditMode(false);
             } catch (err) {
-                console.log(err.response);
+                //console.log(err.response);
                 setNotificationMessage({ type: 'error', message: 'Hubo un error al guardarlo' });
 
             }
