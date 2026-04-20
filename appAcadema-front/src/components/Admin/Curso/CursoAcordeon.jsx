@@ -20,9 +20,9 @@ export default function CursoAcordeon({ curso, isOpen, onToggle }) {
             {isOpen && (
                 <div className="p-4 md:p-6 bg-white animate-fadeIn">
 
-                    <p className="text-color5 font-medium mb-4"><strong>ID Curso:</strong> {curso._id}</p>
+                    <p className="text-color5 font-medium mb-4 break-all"><strong>ID Curso:</strong> {curso._id}</p>
                     <p className="text-color5 font-medium mb-4"><strong>Profesor:</strong> {curso.profesor?.nombre || 'Sin asignar'}</p>
-                    <p className="text-color5 font-medium mb-4"><strong>ID Profesor:</strong> {curso.profesor?.id}</p>
+                    <p className="text-color5 font-medium mb-4 break-all"><strong>ID Profesor:</strong> {curso.profesor?.id}</p>
                     <p className="text-color5 font-medium mb-4"><strong>Nivel:</strong> {curso.nivel}</p>
                     <p className="text-color5 font-medium mb-4"><strong>Año:</strong> {curso.anio}</p>
                     

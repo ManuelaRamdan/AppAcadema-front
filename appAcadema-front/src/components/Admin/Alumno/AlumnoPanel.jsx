@@ -21,6 +21,7 @@ export default function AlumnoPanel() {
         try {
             const res = await getAllAlumnos(page);
             setAlumnos(res.data.alumnos);
+            //console.log(res.data);
 
             setAlumnosFiltradasPagina(res.data.alumnos);
             setPaginacion(res.data.pagination);
@@ -47,22 +48,25 @@ export default function AlumnoPanel() {
 
         setFiltroAlumnos(texto);
         if (texto === "") {
-            setAlumnosFiltradasPagina(usuarios);
+            setAlumnosFiltradasPagina(alumnos);
         } else if (isMongoId(texto)) {
             try {
                 let res = await getAlumnoById(texto);
                 setAlumnosFiltradasPagina([res.data]);
 
             } catch (err) {
-                try {
-                    let res = await getAlumnoByDni(texto);
-                    // console.log(res.data);
-                    setAlumnosFiltradasPagina(res.data);
-                } catch (err) {
-                    setAlumnosFiltradasPagina([]);
-                }
+                
+                setAlumnosFiltradasPagina([]);
             }
-        } else {
+        } else if(!isNaN(texto) && texto.length >= 7){
+            try {
+                let res = await getAlumnoByDni(texto);
+                // console.log(res.data);
+                setAlumnosFiltradasPagina([res.data]);
+            } catch (err) {
+                setAlumnosFiltradasPagina([]);
+            }
+        }else{
             setAlumnosFiltradasPagina(todasAlumnos.filter((a) =>
                 a.nombre?.toLowerCase().includes(texto.toLowerCase())
 
@@ -78,6 +82,8 @@ export default function AlumnoPanel() {
         cargar();
         cargarTodas();
     }, []);
+
+    
 
     if (loading) return <Loading fullScreen />;
     if (error) return <p className="error text-red-500 font-bold p-4 text-center">{error}</p>;
@@ -126,6 +132,10 @@ export default function AlumnoPanel() {
                             alumno={alumno}
                             isOpen={openedAlumnos === alumno._id}
                             onToggle={() => setOpenedAlumnos((prev) => prev === alumno._id ? null : alumno._id)}
+                            onEliminar={() => {
+                                cargar(pagActual);
+                                cargarTodas();
+                            }}
                         />
                     ))
                 ) : (

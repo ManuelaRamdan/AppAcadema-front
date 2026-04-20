@@ -8,7 +8,6 @@ import { updateAlumno } from "./../../../services/alumnoService";
 
 export default function MateriaProfesorDetalle({ materiaCurso,  alumnoId}) {
     const [isOpen, setIsOpen] = useState(false);
-    const [openAlumnoId, setOpenAlumnoId] = useState(null);
     const [editMode, setEditMode] = useState(false);
 
     const [notificationMessage, setNotificationMessage] = useState({ type: '', message: '' });
@@ -88,6 +87,12 @@ export default function MateriaProfesorDetalle({ materiaCurso,  alumnoId}) {
         setNotificationMessage({ type: 'info', message: 'Cambios descartados' });
         setEditMode(false);
     }
+
+    useEffect(() => {
+        if(!isOpen){
+            setEditMode(false);
+        }
+    }, [isOpen]);
 
     return (
         <div className="border-2 border-color2 rounded-2xl overflow-hidden shadow-soft">

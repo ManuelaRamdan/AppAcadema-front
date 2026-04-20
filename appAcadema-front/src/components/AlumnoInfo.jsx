@@ -37,10 +37,7 @@ export default function AlumnoInfo({ alumno }) {
                 <h1 className="text-2xl md:text-4xl break-words font-bold text-color5 uppercase">{alumno.nombre}</h1>
                 <p className="text-color5 font-medium">DNI: {alumno.dni}</p>
             </header>
-
-
-
-
+            
             <section>
 
                 <h2 className="text-2xl font-bold text-color3 text-center mb-6">Materias</h2>
