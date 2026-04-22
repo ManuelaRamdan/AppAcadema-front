@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Loading from "../../Loading";
 import { getAllAlumnos, updateAlumno, deleteAlumno, getAlumnoById, getAlumnoByDni } from "../../../services/alumnoService";
-import AlumnoAdminAcordeon from "./AlumnoAdminAcordeon"; 
+import AlumnoAdminAcordeon from "./AlumnoAdminAcordeon";
 import CrearAlumno from "./CrearAlumno";
 
-export default function AlumnoPanel() {
+export default function AlumnoPanel({ dni, limpiarDni }) {
 
     const [alumnos, setAlumnos] = useState([]);
     const [alumnosFiltradasPagina, setAlumnosFiltradasPagina] = useState([]);
@@ -55,10 +55,10 @@ export default function AlumnoPanel() {
                 setAlumnosFiltradasPagina([res.data]);
 
             } catch (err) {
-                
+
                 setAlumnosFiltradasPagina([]);
             }
-        } else if(!isNaN(texto) && texto.length >= 7){
+        } else if (!isNaN(texto) && texto.length >= 7) {
             try {
                 let res = await getAlumnoByDni(texto);
                 // console.log(res.data);
@@ -66,7 +66,7 @@ export default function AlumnoPanel() {
             } catch (err) {
                 setAlumnosFiltradasPagina([]);
             }
-        }else{
+        } else {
             setAlumnosFiltradasPagina(todasAlumnos.filter((a) =>
                 a.nombre?.toLowerCase().includes(texto.toLowerCase())
 
@@ -79,11 +79,21 @@ export default function AlumnoPanel() {
     }
 
     useEffect(() => {
-        cargar();
-        cargarTodas();
+
+        async function data() {
+            await cargar();
+            await cargarTodas();
+            if (dni) {
+                setFiltroAlumnos(dni);
+                await filtrar(dni);
+                limpiarDni();
+            }
+        }
+        data();
+
     }, []);
 
-    
+
 
     if (loading) return <Loading fullScreen />;
     if (error) return <p className="error text-red-500 font-bold p-4 text-center">{error}</p>;

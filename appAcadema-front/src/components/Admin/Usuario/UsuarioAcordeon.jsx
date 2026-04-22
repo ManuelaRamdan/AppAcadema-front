@@ -1,6 +1,8 @@
 
 
-export default function UsuarioAcordeon({ usuario, isOpen, onToggle }) {
+export default function UsuarioAcordeon({ usuario, isOpen, onToggle, guardarDni }) {
+
+    
 
     return (
         <div className="border-2 border-color2 rounded-2xl overflow-hidden shadow-soft">
@@ -29,9 +31,9 @@ export default function UsuarioAcordeon({ usuario, isOpen, onToggle }) {
                         <div className="text-color5 font-medium mb-4">
                             <strong>DNI de Hijos Asociados:</strong>
                             {usuario.hijos.length > 0 ? (
-                                <ul className="list-disc ml-6 mt-2"> {/* Agregué un poco de margen y estilo de lista para que se vea mejor */}
+                                <ul className="list-disc ml-6 mt-2"> 
                                     {usuario.hijos.map((h) => (
-                                        <li key={h.dni}>{h.dni}</li>
+                                        <li key={h.dni} onClick={() => guardarDni(h.dni)}>{h.dni}</li>
                                     ))}
                                 </ul>
                             ) : (

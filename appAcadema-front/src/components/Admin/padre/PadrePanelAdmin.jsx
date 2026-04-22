@@ -3,7 +3,7 @@ import Loading from "../../Loading";
 import { getAllUsuarios, getUsuarioById } from "../../../services/usuarioService";
 import UsuarioAcordeon from "../Usuario/UsuarioAcordeon";
 
-export default function PadrePanelAdmin() {
+export default function PadrePanelAdmin({guardarDni}) {
 
     const [usuarios, setUsuarios] = useState([]);
     const [usuariosFiltradasPagina , setUsuariosFiltradasPagina ] = useState([]);
@@ -94,6 +94,7 @@ export default function PadrePanelAdmin() {
                             usuario={usuario}
                             isOpen={openedUsuario === usuario._id}
                             onToggle={() => setOpenedUsuario((prev) => prev === usuario._id ? null : usuario._id)}
+                            guardarDni={guardarDni}
                         />
                     ))
                 ) : (

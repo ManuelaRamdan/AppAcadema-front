@@ -62,7 +62,8 @@ export default function UsuarioPanel() {
             setUsuariosFiltradasPagina(todasUsuarios.filter((u) =>
                 u.nombre?.toLowerCase().includes(texto.toLowerCase()) ||
                 u.email?.toLowerCase().includes(texto.toLowerCase()) ||
-                u.hijos?.some((h) => h.dni?.includes(texto.toLowerCase()))
+                u.hijos?.some((h) => h.dni?.includes(texto.toLowerCase())) ||
+                u.rol?.toLowerCase().includes(texto.toLowerCase())
             ) || []);
         }
     }

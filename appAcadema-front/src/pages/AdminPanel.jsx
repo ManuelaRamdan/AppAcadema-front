@@ -17,7 +17,7 @@ const SECCIONES = [
     { id: "padres", nombre: "Padres" }
 ];
 
-const renderContent = (seccion) => {
+const renderContent = (seccion, dni, guardarDni, limpiarDni) => {
     switch (seccion) {
         case "usuarios":
             return <UsuarioPanel />;
@@ -28,10 +28,10 @@ const renderContent = (seccion) => {
         case "profesores":
             return <ProfePanel />;
         case "alumnos":
-            return <AlumnoPanel />;
+            return <AlumnoPanel dni={dni} limpiarDni={limpiarDni}/>;
 
         case "padres":
-            return <PadrePanelAdmin />;
+            return <PadrePanelAdmin guardarDni={guardarDni}/>;
         default: return <p>Seleccioná una sección</p>;
     }
 }
@@ -42,6 +42,19 @@ export default function AdminPanel() {
     const { logout, user } = useAuth();
     const [seccionSeleccionada, setSeccionSeleccionada] = useState("usuarios");
     const [error, setError] = useState(null);
+    const [dni, setDni] = useState("");
+
+    const guardarDni = (dni) => {
+        setDni(dni);
+        setSeccionSeleccionada("alumnos");
+    }
+
+    const limpiarDni = () => {
+        setDni("");
+        
+    }
+
+    
 
 
     const [menuAbierto, setMenuAbierto] = useState(false);
@@ -107,7 +120,7 @@ export default function AdminPanel() {
                     key={seccionSeleccionada}>
                     <div className="max-w-6xl mx-auto">
 
-                        {renderContent(seccionSeleccionada)}
+                        {renderContent(seccionSeleccionada, dni, guardarDni, limpiarDni)}
                     </div>
                 </main>
 
