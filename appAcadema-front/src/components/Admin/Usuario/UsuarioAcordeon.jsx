@@ -1,8 +1,30 @@
-
+import { getAllAlumnos } from "../../../services/alumnoService";
+import { useEffect, useState } from "react";
 
 export default function UsuarioAcordeon({ usuario, isOpen, onToggle, guardarDni }) {
+    const [alumnos, setAlumnos] = useState([]);
 
-    
+    const cargar = async (page) => {
+        try {
+            const res = await getAllAlumnos(page);
+            setAlumnos(res.data.alumnos);
+        } catch {
+            setError("No se pudieron cargar los Alumnos");
+        }
+    }
+
+    const listaDni = usuario.hijos.map((a) => a.dni);
+
+
+    const alumnosFiltrados = alumnos.filter((a) => listaDni.includes(a.dni));
+
+    const hijosUsuario = alumnosFiltrados.map((a) => ({ nombre: a.nombre, dni: a.dni }));
+
+
+    useEffect(() => {
+        cargar();
+    }, [usuario.hijos]);
+
 
     return (
         <div className="border-2 border-color2 rounded-2xl overflow-hidden shadow-soft">
@@ -24,16 +46,16 @@ export default function UsuarioAcordeon({ usuario, isOpen, onToggle, guardarDni 
                     <p className="text-color5 font-medium mb-4 break-words"><strong>Email:</strong> {usuario.email}</p>
                     <p className="text-color5 font-medium mb-4"><strong>Rol:</strong> {usuario.rol}</p>
                     {usuario.profesorId && (
-                        <p  className="text-color5 font-medium mb-4 break-all"><strong>ID Profesor:</strong> <span> {usuario.profesorId}</span></p>
+                        <p className="text-color5 font-medium mb-4 break-all"><strong>ID Profesor:</strong> <span> {usuario.profesorId}</span></p>
                     )}
 
                     {usuario.hijos && (
                         <div className="text-color5 font-medium mb-4">
                             <strong>DNI de Hijos Asociados:</strong>
                             {usuario.hijos.length > 0 ? (
-                                <ul className="list-disc ml-6 mt-2"> 
-                                    {usuario.hijos.map((h) => (
-                                        <li key={h.dni} onClick={() => guardarDni(h.dni)}>{h.dni}</li>
+                                <ul className="list-disc ml-6 mt-2">
+                                    {hijosUsuario.map((h) => (
+                                        <li key={h.dni} onClick={() => guardarDni(h.dni)}>{h.nombre} - {h.dni}</li>
                                     ))}
                                 </ul>
                             ) : (
