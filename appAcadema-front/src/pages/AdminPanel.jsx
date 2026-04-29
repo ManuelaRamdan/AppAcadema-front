@@ -17,7 +17,7 @@ const SECCIONES = [
     { id: "padres", nombre: "Padres" }
 ];
 
-const renderContent = (seccion, dni, guardarDni, limpiarDni) => {
+const renderContent = (seccion, dni, guardarDni, limpiarDni, idCurso, guardarIdCurso, limpiarIdCurso) => {
     switch (seccion) {
         case "usuarios":
             return <UsuarioPanel />;
@@ -26,9 +26,9 @@ const renderContent = (seccion, dni, guardarDni, limpiarDni) => {
         case "cursos":
             return <CursoPanel />;
         case "profesores":
-            return <ProfePanel />;
+            return <ProfePanel idCurso={idCurso} limpiarIdCurso={limpiarIdCurso}/>;
         case "alumnos":
-            return <AlumnoPanel dni={dni} limpiarDni={limpiarDni}/>;
+            return <AlumnoPanel dni={dni} limpiarDni={limpiarDni} guardarIdCurso={guardarIdCurso}/>;
 
         case "padres":
             return <PadrePanelAdmin guardarDni={guardarDni}/>;
@@ -43,6 +43,7 @@ export default function AdminPanel() {
     const [seccionSeleccionada, setSeccionSeleccionada] = useState("usuarios");
     const [error, setError] = useState(null);
     const [dni, setDni] = useState("");
+    const [idCurso, setIdCurso] = useState("");
 
     const guardarDni = (dni) => {
         setDni(dni);
@@ -51,6 +52,15 @@ export default function AdminPanel() {
 
     const limpiarDni = () => {
         setDni("");
+        
+    }
+    const guardarIdCurso = (id) => {
+        setIdCurso(id);
+        setSeccionSeleccionada("profesores");
+    }
+
+    const limpiarIdCurso  = () => {
+        setIdCurso("");
         
     }
 
@@ -120,7 +130,7 @@ export default function AdminPanel() {
                     key={seccionSeleccionada}>
                     <div className="max-w-6xl mx-auto">
 
-                        {renderContent(seccionSeleccionada, dni, guardarDni, limpiarDni)}
+                        {renderContent(seccionSeleccionada, dni, guardarDni, limpiarDni, idCurso, guardarIdCurso, limpiarIdCurso)}
                     </div>
                 </main>
 

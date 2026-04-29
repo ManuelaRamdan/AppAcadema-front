@@ -19,3 +19,6 @@ export const getAllProfesores = (page = 1, limit = 10) => {
 export const getProfesorById = async (id) => {
     return api.get(`/api/profesores/${id}`);
 };
+export const getProfesorByIdCurso = async (id) => {
+    return api.get(`/api/profesores/curso/${id}`);
+};

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Loading from "../../Loading";
-import { getAllProfesores, getProfesorById } from "../../../services/profeService";
+import { getAllProfesores, getProfesorById, getProfesorByIdCurso} from "../../../services/profeService";
 import ProfesorAcordeon from "./ProfesorAcordeon";
 
-export default function ProfesorPanel() {
+export default function ProfesorPanel({idCurso, limpiarIdCurso}) {
 
     const [profesores, setProfesores] = useState([]);
     const [profesoresFiltradasPagina, setProfesoresFiltradasPagina] = useState([]);
@@ -50,8 +50,14 @@ export default function ProfesorPanel() {
                 setProfesoresFiltradasPagina([res.data]);
 
             } catch (err) {
+                try {
+                    let res = await getProfesorByIdCurso(texto);
 
-                setProfesoresFiltradasPagina([]);
+                    setProfesoresFiltradasPagina([res.data]);
+                    setOpenedProfesores(res.data._id);
+                } catch (err) {
+                    setProfesoresFiltradasPagina([]);
+                }
 
             }
         } else {
@@ -67,8 +73,18 @@ export default function ProfesorPanel() {
     }
 
     useEffect(() => {
-        cargar();
-        cargarTodas();
+
+        async function data() {
+            await cargar();
+            await cargarTodas();
+            if (idCurso) {
+                setFiltroProfesores(idCurso);
+                await filtrar(idCurso);
+                limpiarIdCurso();
+            }
+        }
+        data();
+
     }, []);
 
     if (loading) return <Loading fullScreen />;
@@ -101,6 +117,7 @@ export default function ProfesorPanel() {
                             profesor={profe}
                             isOpen={openedProfesores === profe._id}
                             onToggle={() => setOpenedProfesores((prev) => prev === profe._id ? null : profe._id)}
+                            idCurso={idCurso}
                         />
                     ))
                 ) : (

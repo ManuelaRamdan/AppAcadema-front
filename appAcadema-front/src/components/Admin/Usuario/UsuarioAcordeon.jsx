@@ -55,7 +55,8 @@ export default function UsuarioAcordeon({ usuario, isOpen, onToggle, guardarDni 
                             {usuario.hijos.length > 0 ? (
                                 <ul className="list-disc ml-6 mt-2">
                                     {hijosUsuario.map((h) => (
-                                        <li key={h.dni} onClick={() => guardarDni(h.dni)}>{h.nombre} - {h.dni}</li>
+                                        <li key={h.dni} onClick={() => guardarDni(h.dni)}
+                                        className="text-blue-500 underline cursor-pointer">{h.nombre} - {h.dni}</li>
                                     ))}
                                 </ul>
                             ) : (

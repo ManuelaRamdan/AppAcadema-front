@@ -4,7 +4,7 @@ import { getAllAlumnos, updateAlumno, deleteAlumno, getAlumnoById, getAlumnoByDn
 import AlumnoAdminAcordeon from "./AlumnoAdminAcordeon";
 import CrearAlumno from "./CrearAlumno";
 
-export default function AlumnoPanel({ dni, limpiarDni }) {
+export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso }) {
 
     const [alumnos, setAlumnos] = useState([]);
     const [alumnosFiltradasPagina, setAlumnosFiltradasPagina] = useState([]);
@@ -146,6 +146,7 @@ export default function AlumnoPanel({ dni, limpiarDni }) {
                                 cargar(pagActual);
                                 cargarTodas();
                             }}
+                            guardarIdCurso={guardarIdCurso}
                         />
                     ))
                 ) : (

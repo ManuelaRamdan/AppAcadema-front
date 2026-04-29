@@ -6,7 +6,7 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 import { updateAlumno } from "./../../../services/alumnoService";
 
-export default function MateriaProfesorDetalle({ materiaCurso,  alumnoId}) {
+export default function MateriaProfesorDetalle({ materiaCurso, alumnoId, guardarIdCurso }) {
     const [isOpen, setIsOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
@@ -49,7 +49,7 @@ export default function MateriaProfesorDetalle({ materiaCurso,  alumnoId}) {
                 asistencias: datosTemporales.asistencias
             }]
         }
-        
+
 
         const hayCeroNotas = datosTemporales.notas.some((n) => n.tipo === "" || n.nota === "");
         const hayCeroA = datosTemporales.asistencias.some((n) => n.fecha === "" || n.presente === "");
@@ -89,7 +89,7 @@ export default function MateriaProfesorDetalle({ materiaCurso,  alumnoId}) {
     }
 
     useEffect(() => {
-        if(!isOpen){
+        if (!isOpen) {
             setEditMode(false);
         }
     }, [isOpen]);
@@ -117,11 +117,20 @@ export default function MateriaProfesorDetalle({ materiaCurso,  alumnoId}) {
                         </div>
                     )}
 
+                    <div className="flex flex-col gap-2 text-xs md:text-sm text-gray-500">
+                        <span className="font-bold uppercase tracking-wider">ID:</span>
+                        <span className="break-all font-mono bg-gray-100 px-2 py-1 rounded">{materiaCurso.idCurso}</span>
+                        <span className="font-bold uppercase tracking-wider">Profesor:</span>
+                        <span className="text-base md:text-lg font-bold text-blue-500 underline break-all font-mono bg-gray-100 px-2 py-1 rounded"
+                        onClick={()=> guardarIdCurso(materiaCurso.idCurso)}>
+                            {materiaCurso.profesor.nombre}
+                        </span>
+                    </div>
 
                     {!editMode && (
 
                         <button onClick={() => setEditMode(true)}
-                            className="w-full bg-color5 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-opacity-90 transition-all mb-6"
+                            className="w-full bg-color5 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-opacity-90 transition-all mb-6 mt-4"
                         >
                             <FaEdit size={16} className="btn-icon-right" /> Editar Notas/Asistencias
                         </button>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-export default function MateriaProfesorDetalle({ materiaCurso }) {
-    const [isOpen, setIsOpen] = useState(false);
+export default function MateriaProfesorDetalle({ materiaCurso, isOpen, onToggle  }) {
     const [openAlumnoId, setOpenAlumnoId] = useState(null);
     const getFixedDateDisplay = (isoDate) => {
 
@@ -28,7 +27,7 @@ export default function MateriaProfesorDetalle({ materiaCurso }) {
 
 
             <div
-                onClick={() => setIsOpen((prev) => !prev)}
+                onClick={onToggle}
                 className={`p-3 md:p-4 cursor-pointer transition-colors flex justify-between items-center ${isOpen ? "bg-color2" : "bg-color4 hover:bg-color2"}`}
             >
                 <span className="font-bold text-color5">
@@ -40,7 +39,7 @@ export default function MateriaProfesorDetalle({ materiaCurso }) {
 
             {isOpen && (
                 <div className="p-4 md:p-6 bg-white animate-fadeIn">
-                    <p className="text-color5 font-medium mb-4 break-all"><strong>ID:</strong> {materiaCurso._id}</p>
+                    <p className="text-color5 font-medium mb-4 break-all"><strong>ID:</strong> {materiaCurso.idCurso}</p>
 
                     {materiaCurso.alumnos && (
                         <div className="text-color5 font-medium mb-4">

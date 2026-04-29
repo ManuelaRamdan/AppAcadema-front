@@ -5,7 +5,7 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import MateriaAcordeon from "./MateriaAlumnoAcordeon";
 import { updateAlumno, deleteAlumno } from "./../../../services/alumnoService";
 
-export default function AlumnoAdminAcordeon({ alumno, isOpen, onToggle, onEliminar }) {
+export default function AlumnoAdminAcordeon({ alumno, isOpen, onToggle, onEliminar, guardarIdCurso}) {
     const [editMode, setEditMode] = useState(false);
     const [nombre, setNombre] = useState("");
     const [dni, setDni] = useState("");
@@ -214,6 +214,7 @@ export default function AlumnoAdminAcordeon({ alumno, isOpen, onToggle, onElimin
                             <MateriaAcordeon
                                 materiaCurso={m}
                                 alumnoId={alumno._id}
+                                guardarIdCurso={guardarIdCurso}
                             >
                             </MateriaAcordeon>
                         </div>
