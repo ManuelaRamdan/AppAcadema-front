@@ -30,7 +30,7 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
 
         const hayCeroNotas = datosTemporales.notas.some((n) => n.tipo === "" || n.nota === "");
         const hayCeroA = datosTemporales.asistencias.some((n) => n.fecha === "" || n.presente === "");
-        const soloTiposNotas = datosTemporales.notas.map((n) => n.tipo);
+        const soloTiposNotas = datosTemporales.notas.map((n) => n.tipo.toLowerCase());
         const soloFechas = datosTemporales.asistencias.map((n) => n.fecha);
 
         const setNotas = new Set(soloTiposNotas);

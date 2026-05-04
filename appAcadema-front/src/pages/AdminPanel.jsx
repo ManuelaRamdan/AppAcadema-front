@@ -17,7 +17,7 @@ const SECCIONES = [
     { id: "padres", nombre: "Padres" }
 ];
 
-const renderContent = (seccion, dni, guardarDni, limpiarDni, idCurso, guardarIdCurso, limpiarIdCurso) => {
+const renderContent = (seccion, dni, guardarDni, limpiarDni, idCurso, guardarIdCurso, limpiarIdCurso, guardarHayEdicion) => {
     switch (seccion) {
         case "usuarios":
             return <UsuarioPanel />;
@@ -26,12 +26,12 @@ const renderContent = (seccion, dni, guardarDni, limpiarDni, idCurso, guardarIdC
         case "cursos":
             return <CursoPanel />;
         case "profesores":
-            return <ProfePanel idCurso={idCurso} limpiarIdCurso={limpiarIdCurso}/>;
+            return <ProfePanel idCurso={idCurso} limpiarIdCurso={limpiarIdCurso} />;
         case "alumnos":
-            return <AlumnoPanel dni={dni} limpiarDni={limpiarDni} guardarIdCurso={guardarIdCurso}/>;
+            return <AlumnoPanel dni={dni} limpiarDni={limpiarDni} guardarIdCurso={guardarIdCurso} guardarHayEdicion={guardarHayEdicion} />;
 
         case "padres":
-            return <PadrePanelAdmin guardarDni={guardarDni}/>;
+            return <PadrePanelAdmin guardarDni={guardarDni} />;
         default: return <p>Seleccioná una sección</p>;
     }
 }
@@ -44,6 +44,10 @@ export default function AdminPanel() {
     const [error, setError] = useState(null);
     const [dni, setDni] = useState("");
     const [idCurso, setIdCurso] = useState("");
+    const [hayEdicion, setHayEdicion] = useState(false);
+    const [modalCambioSeccion, setModalCambioSeccion] = useState(null);
+
+    const [menuAbierto, setMenuAbierto] = useState(false);
 
     const guardarDni = (dni) => {
         setDni(dni);
@@ -52,25 +56,34 @@ export default function AdminPanel() {
 
     const limpiarDni = () => {
         setDni("");
-        
+
     }
     const guardarIdCurso = (id) => {
         setIdCurso(id);
         setSeccionSeleccionada("profesores");
     }
-
-    const limpiarIdCurso  = () => {
-        setIdCurso("");
-        
+    const guardarHayEdicion = (editando) => {
+        setHayEdicion(editando);
     }
 
-    
+    const limpiarIdCurso = () => {
+        setIdCurso("");
+
+    }
 
 
-    const [menuAbierto, setMenuAbierto] = useState(false);
+
+
     const seleccionarSeccion = (id) => {
-        setSeccionSeleccionada(id);
-        setMenuAbierto(false);
+
+        if (hayEdicion) {
+            setModalCambioSeccion(id);
+            
+        } else {
+            setSeccionSeleccionada(id);
+            setHayEdicion(false);
+            setMenuAbierto(false);
+        }
     };
 
 
@@ -130,9 +143,35 @@ export default function AdminPanel() {
                     key={seccionSeleccionada}>
                     <div className="max-w-6xl mx-auto">
 
-                        {renderContent(seccionSeleccionada, dni, guardarDni, limpiarDni, idCurso, guardarIdCurso, limpiarIdCurso)}
+                        {renderContent(seccionSeleccionada, dni, guardarDni, limpiarDni, idCurso, guardarIdCurso, limpiarIdCurso, guardarHayEdicion)}
                     </div>
                 </main>
+
+                {modalCambioSeccion &&
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-2xl p-6 shadow-xl text-center max-w-sm w-full mx-4">
+                                <h3 className="text-lg font-bold text-color5 mb-2">Editando</h3>
+                                <p className="text-gray-600 mb-6">¿Estás seguro que deseas salir de la edición?</p>
+                                <div className="flex gap-4 justify-center">
+                                    <button
+                                        onClick={() => setModalCambioSeccion(null)}
+                                        className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        onClick={() => {setSeccionSeleccionada(modalCambioSeccion);
+                                            setModalCambioSeccion(null); // cerrar el modal
+                                            setHayEdicion(false);        // limpiar la edición
+                                            setMenuAbierto(false);  }}
+                                        className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition-colors"
+                                    >
+                                        Confirmar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                }
 
 
             </div>

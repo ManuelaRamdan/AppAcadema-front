@@ -6,7 +6,7 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 import { updateAlumno } from "./../../../services/alumnoService";
 
-export default function MateriaProfesorDetalle({ materiaCurso, alumnoId, guardarIdCurso }) {
+export default function MateriaProfesorDetalle({ materiaCurso, alumnoId, guardarIdCurso, guardarHayEdicion }) {
     const [isOpen, setIsOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
@@ -16,6 +16,10 @@ export default function MateriaProfesorDetalle({ materiaCurso, alumnoId, guardar
         notas: materiaCurso.notas,
         asistencias: materiaCurso.asistencias
     });
+
+    useEffect(() => {
+        guardarHayEdicion(editMode);
+    }, [editMode]);
 
     const getNotificationClass = (type) => {
         const baseClass = "p-3 rounded-xl font-semibold text-sm mb-4 transition-opacity duration-300 border-l-4";
@@ -53,7 +57,7 @@ export default function MateriaProfesorDetalle({ materiaCurso, alumnoId, guardar
 
         const hayCeroNotas = datosTemporales.notas.some((n) => n.tipo === "" || n.nota === "");
         const hayCeroA = datosTemporales.asistencias.some((n) => n.fecha === "" || n.presente === "");
-        const soloTiposNotas = datosTemporales.notas.map((n) => n.tipo);
+        const soloTiposNotas = datosTemporales.notas.map((n) => n.tipo.toLowerCase());
         const soloFechas = datosTemporales.asistencias.map((n) => n.fecha);
 
         const setNotas = new Set(soloTiposNotas);

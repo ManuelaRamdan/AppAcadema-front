@@ -22,7 +22,7 @@ export default function CrearUsuario({ isOpen, onClose, onExito }) {
     const [notificationMessage, setNotificationMessage] = useState({ type: '', message: '' });
     const [profesFiltrados, setProfesoresFiltrados] = useState([]); 
     
-   
+
 
 
     const getNotificationClass = (type) => {
