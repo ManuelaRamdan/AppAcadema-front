@@ -123,10 +123,11 @@ export default function MateriaProfesorDetalle({ materiaCurso, alumnoId, guardar
 
                     <div className="flex flex-col gap-2 text-xs md:text-sm text-gray-500">
                         <span className="font-bold uppercase tracking-wider">ID:</span>
-                        <span className="break-all font-mono bg-gray-100 px-2 py-1 rounded">{materiaCurso.idCurso}</span>
+                        <span className="break-all font-mono text-blue-500 underline bg-gray-100 px-2 py-1 rounded"
+                        onClick={()=> guardarIdCurso(materiaCurso.idCurso, 'idCurso')}>{materiaCurso.idCurso}</span>
                         <span className="font-bold uppercase tracking-wider">Profesor:</span>
                         <span className="text-base md:text-lg font-bold text-blue-500 underline break-all font-mono bg-gray-100 px-2 py-1 rounded"
-                        onClick={()=> guardarIdCurso(materiaCurso.idCurso)}>
+                        onClick={()=> guardarIdCurso(materiaCurso.idCurso, 'profesor')}>
                             {materiaCurso.profesor.nombre}
                         </span>
                     </div>

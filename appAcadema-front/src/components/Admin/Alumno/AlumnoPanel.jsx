@@ -17,6 +17,21 @@ export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso, guardarHa
     const [openModal, setOpenModal] = useState(false);
     const [pagActual, setPagActual] = useState(1);
 
+
+    useEffect(() => {
+        async function data() {
+            const buscarAlumnoPorDni = async (dni) => {
+                const res = await getAlumnoByDni(dni);
+                return res.data._id;
+            }
+            if (dni) {
+                const idAlumno = await buscarAlumnoPorDni(dni);  
+                setOpenedAlumnos(idAlumno);
+            }
+        }
+        data();
+    }, []);
+
     const cargar = async (page) => {
         try {
             const res = await getAllAlumnos(page);
@@ -132,7 +147,9 @@ export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso, guardarHa
                     onChange={(e) => filtrar(e.target.value)}
                     className="w-full p-3 rounded-xl border border-color2 focus:ring-2 focus:ring-color3 outline-none transition-all shadow-soft text-color5 text-sm"
                 />
+                <p className="text-sm text-gray-500"> Alumnos encontrados: {filtroAlumnos.length === 0 ? todasAlumnos.length : alumnosFiltradasPagina.length}</p>
             </div>
+            
 
             <div className="space-y-4">
                 {alumnosFiltradasPagina.length > 0 ? (

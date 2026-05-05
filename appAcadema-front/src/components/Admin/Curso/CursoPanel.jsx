@@ -3,7 +3,7 @@ import Loading from "../../Loading";
 import { getAllCursos, getCursoById, getCursoByIdProfe } from "../../../services/cursoService";
 import CursoAcordeon from "./CursoAcordeon";
 
-export default function CursoPanel() {
+export default function CursoPanel({idCurso, limpiarIdCurso}) {
 
     const [cursos, setCursos] = useState([]);
     const [cursosFiltradasPagina, setCursosFiltradasPagina] = useState([]);
@@ -73,9 +73,21 @@ export default function CursoPanel() {
         return texto.length === 24 && /^[0-9a-fA-F]+$/.test(texto);
     }
 
+
     useEffect(() => {
-        cargar();
-        cargarTodas();
+
+        async function data() {
+            await cargar();
+            await cargarTodas();
+            if (idCurso) {
+                setFiltroCursos(idCurso);
+                await filtrar(idCurso);
+                limpiarIdCurso();
+                setOpenedCursos(idCurso);
+            }
+        }
+        data();
+
     }, []);
 
     if (loading) return <Loading fullScreen />;
@@ -98,6 +110,8 @@ export default function CursoPanel() {
                     onChange={(e) => filtrar(e.target.value)}
                     className="w-full p-3 rounded-xl border border-color2 focus:ring-2 focus:ring-color3 outline-none transition-all shadow-soft text-color5 text-sm"
                 />
+                <p className="text-sm text-gray-500"> Cursos encontrados: {filtroCursos.length === 0 ? todasCursos.length : cursosFiltradasPagina.length}</p>
+
             </div>
 
             <div className="space-y-4">

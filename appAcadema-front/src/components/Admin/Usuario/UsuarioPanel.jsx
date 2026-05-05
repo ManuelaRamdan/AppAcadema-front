@@ -4,7 +4,7 @@ import { getUsuarioById, createUsuario, getAllUsuarios } from "../../../services
 import UsuarioAcordeon from "./UsuarioAcordeon";
 import CrearUsuario from "./CrearUsuario";
 
-export default function UsuarioPanel() {
+export default function UsuarioPanel({guardarDni}) {
 
     const [usuarios, setUsuarios] = useState([]);
     const [usuariosFiltradasPagina, setUsuariosFiltradasPagina] = useState([]);
@@ -104,6 +104,7 @@ export default function UsuarioPanel() {
                     cargarTodas();
                 }}>
 
+
             </CrearUsuario>
 
             <div className="mb-6">
@@ -114,6 +115,7 @@ export default function UsuarioPanel() {
                     onChange={(e) => filtrar(e.target.value)}
                     className="w-full p-3 rounded-xl border border-color2 focus:ring-2 focus:ring-color3 outline-none transition-all shadow-soft text-color5 text-sm"
                 />
+                <p className="text-sm text-gray-500"> Usuarios encontrados: {filtroUsuarios.length === 0 ? todasUsuarios.length : usuariosFiltradasPagina.length}</p>
             </div>
 
             <div className="space-y-4">
@@ -124,6 +126,7 @@ export default function UsuarioPanel() {
                             usuario={usuario}
                             isOpen={openedUsuarios === usuario._id}
                             onToggle={() => setOpenedUsuarios((prev) => prev === usuario._id ? null : usuario._id)}
+                            guardarDni={guardarDni}
                         />
                     ))
                 ) : (

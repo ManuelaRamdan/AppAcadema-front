@@ -107,6 +107,8 @@ export default function ProfesorPanel({idCurso, limpiarIdCurso}) {
                     onChange={(e) => filtrar(e.target.value)}
                     className="w-full p-3 rounded-xl border border-color2 focus:ring-2 focus:ring-color3 outline-none transition-all shadow-soft text-color5 text-sm"
                 />
+                <p className="text-sm text-gray-500"> Profesores encontrados: {filtroProfesores.length === 0 ? todasProfesores.length : profesoresFiltradasPagina.length}</p>
+
             </div>
 
             <div className="space-y-4">

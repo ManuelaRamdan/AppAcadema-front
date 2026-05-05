@@ -20,11 +20,11 @@ const SECCIONES = [
 const renderContent = (seccion, dni, guardarDni, limpiarDni, idCurso, guardarIdCurso, limpiarIdCurso, guardarHayEdicion) => {
     switch (seccion) {
         case "usuarios":
-            return <UsuarioPanel />;
+            return <UsuarioPanel guardarDni={guardarDni} />;
         case "materias":
             return <MateriaPanel />;
         case "cursos":
-            return <CursoPanel />;
+            return <CursoPanel idCurso={idCurso} limpiarIdCurso={limpiarIdCurso}/>;
         case "profesores":
             return <ProfePanel idCurso={idCurso} limpiarIdCurso={limpiarIdCurso} />;
         case "alumnos":
@@ -58,9 +58,13 @@ export default function AdminPanel() {
         setDni("");
 
     }
-    const guardarIdCurso = (id) => {
+    const guardarIdCurso = (id, tipo) => {
         setIdCurso(id);
-        setSeccionSeleccionada("profesores");
+        if (tipo === 'profesor') {
+            setSeccionSeleccionada("profesores");
+        } else {
+            setSeccionSeleccionada("cursos");
+        }
     }
     const guardarHayEdicion = (editando) => {
         setHayEdicion(editando);
