@@ -18,12 +18,13 @@ export default function PadrePanel() {
 
 
     const cargar = async () => {
+        setLoading(true);
         try {
             const res = await getHijosPadre();
             setHijos(res.data.hijos);
 
             if (res.data.hijos.length > 0) {
-                seleccionarHijo(res.data.hijos[0].id);
+                await seleccionarHijo(res.data.hijos[0].id);
             }
 
         } catch {

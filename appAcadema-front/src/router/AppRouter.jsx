@@ -5,14 +5,16 @@ import Admin from "../pages/AdminPanel";
 import Profesor from "../pages/ProfesorPanel";
 import PadrePanel from "../pages/PadrePanel";
 
+
 import ProtectRoute from "./ProtectRoute";
+
 
 function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element= {<Login />} />
 
                 {/* RUTA ADMIN */}
                 <Route

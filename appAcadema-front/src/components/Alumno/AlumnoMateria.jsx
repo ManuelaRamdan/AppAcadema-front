@@ -22,12 +22,6 @@ export default function AlumnoMateria({ materiaSeleccionada, profesor }) {
         return tipoOrd; 
     })
 
-    if(filtroOrdenar === 'asc'){
-        materiaSeleccionada.alumnos.sort((a, b) => a.nombre - b.nombre);
-    }else if(filtroOrdenar){
-        materiaSeleccionada.alumnos.sort((a, b) => b.nombre - a.nombre);
-    }
-
 
 
     return (

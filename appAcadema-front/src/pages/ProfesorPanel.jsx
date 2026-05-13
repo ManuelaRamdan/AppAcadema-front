@@ -46,17 +46,9 @@ export default function ProfesorPanel() {
     }
 
     const seleccionarMateria = (m) => {
-        try {
-            setLoading(true);
-            setMateriaSelecccionada(m);
-            setAlumnos(m.alumnos || []);
-            setMenuAbierto(false);
-        } catch {
-            setError("No se pudieron cargar la materia");
-        } finally {
-            setLoading(false);
-
-        }
+        setMateriaSelecccionada(m);
+        setAlumnos(m.alumnos || []);
+        setMenuAbierto(false);
     }
 
 
@@ -151,7 +143,7 @@ export default function ProfesorPanel() {
 
 
                             <AlumnoMateria
-                                key={profesor._id}
+                                key={materiaSelecccionada._id}
                                 materiaSeleccionada={materiaSelecccionada}
                                 profesor={profesor}
                             />
