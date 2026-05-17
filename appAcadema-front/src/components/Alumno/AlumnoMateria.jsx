@@ -7,9 +7,21 @@ import AlumnoAcordeon from './AlumnoAcordeon';
 
 export default function AlumnoMateria({ materiaSeleccionada, profesor }) {
     const [filtroAlumno, setFiltroAlumno] = useState("");
+    const [filtroOrdenar, setFiltroOrdenar] = useState("");
+
     const alumnosFiltrados = materiaSeleccionada.alumnos.filter((al) =>
         al.nombre.toLowerCase().includes(filtroAlumno.toLowerCase())
-    );
+
+    ).sort((a, b) => {
+        let tipoOrd = 0;
+        if (filtroOrdenar === 'asc') {
+            tipoOrd = a.nombre.localeCompare(b.nombre);
+        } else if (filtroOrdenar === 'desc') {
+            tipoOrd = b.nombre.localeCompare(a.nombre)
+        }
+        return tipoOrd; 
+    })
+
 
 
     return (
@@ -21,6 +33,16 @@ export default function AlumnoMateria({ materiaSeleccionada, profesor }) {
                 </h3>
             </header>
             <div className="mb-6">
+                <select
+                    value={filtroOrdenar}
+                    onChange={(e) => setFiltroOrdenar(e.target.value)}
+                    className="w-full p-3 rounded-xl border border-color2 focus:ring-2 focus:ring-color3 outline-none transition-all shadow-soft"
+                >
+                    <option value="">Todas los alumnos</option>
+                    <option value="asc">a-z</option>
+                    <option value="desc">z-a</option>
+
+                </select>
                 <input
                     type="text"
                     placeholder="Buscar alumno"

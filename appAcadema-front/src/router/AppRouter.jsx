@@ -5,7 +5,9 @@ import Admin from "../pages/AdminPanel";
 import Profesor from "../pages/ProfesorPanel";
 import PadrePanel from "../pages/PadrePanel";
 
+
 import ProtectRoute from "./ProtectRoute";
+
 
 function AppRouter() {
     return (

@@ -22,7 +22,7 @@ export default function CrearUsuario({ isOpen, onClose, onExito }) {
     const [notificationMessage, setNotificationMessage] = useState({ type: '', message: '' });
     const [profesFiltrados, setProfesoresFiltrados] = useState([]); 
     
-   
+
 
 
     const getNotificationClass = (type) => {
@@ -87,11 +87,10 @@ export default function CrearUsuario({ isOpen, onClose, onExito }) {
             profesorId: rol === "profesor" ? profeId : null,
         }
         try {
-            console.log(data);
             await createUsuario(data);
             setNotificationMessage({ type: 'success', message: 'Se guardó exitosamente' });
             reset();
-            setTimeout(() => onExito(), 1500);
+            setTimeout(() => onExito(), 3000);
         } catch (err) {
             const mensaje = err?.response?.data?.error || err?.response?.data?.message || "Error al crear usuario";
             setNotificationMessage({ type: 'error', message: mensaje });

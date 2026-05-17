@@ -1,7 +1,16 @@
 import MateriaProfesorDetalle from "./MateriaProfesorDetalle";
+import { useState, useEffect } from "react";
 
-export default function ProfesorAcordeon({ profesor, isOpen, onToggle }) {
-    // console.log(curso);
+export default function ProfesorAcordeon({ profesor, isOpen, onToggle, idCurso }) {
+    const [openedMateria, setOpenedMateria] = useState(null);
+
+    useEffect(() => {
+        if (idCurso) {
+            setOpenedMateria(idCurso);
+
+        }
+    }, [idCurso]);
+
     return (
         <div className="border-2 border-color2 rounded-2xl overflow-hidden shadow-soft">
 
@@ -28,7 +37,10 @@ export default function ProfesorAcordeon({ profesor, isOpen, onToggle }) {
                                 <div className="space-y-4 mt-3">
                                     {profesor.materiasDictadas.map((materia) => (
                                         <MateriaProfesorDetalle
+                                            key={materia.idCurso}
                                             materiaCurso={materia}
+                                            isOpen={openedMateria === materia.idCurso}
+                                            onToggle={() => setOpenedMateria((prev) => prev === materia.idCurso ? null : materia.idCurso)}
                                         />
                                     ))}
                                 </div>

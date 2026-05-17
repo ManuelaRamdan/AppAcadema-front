@@ -4,7 +4,7 @@ import { getAllAlumnos, updateAlumno, deleteAlumno, getAlumnoById, getAlumnoByDn
 import AlumnoAdminAcordeon from "./AlumnoAdminAcordeon";
 import CrearAlumno from "./CrearAlumno";
 
-export default function AlumnoPanel({ dni, limpiarDni }) {
+export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso, guardarHayEdicion }) {
 
     const [alumnos, setAlumnos] = useState([]);
     const [alumnosFiltradasPagina, setAlumnosFiltradasPagina] = useState([]);
@@ -16,6 +16,21 @@ export default function AlumnoPanel({ dni, limpiarDni }) {
     const [filtroAlumnos, setFiltroAlumnos] = useState("");
     const [openModal, setOpenModal] = useState(false);
     const [pagActual, setPagActual] = useState(1);
+
+
+    useEffect(() => {
+        async function data() {
+            const buscarAlumnoPorDni = async (dni) => {
+                const res = await getAlumnoByDni(dni);
+                return res.data._id;
+            }
+            if (dni) {
+                const idAlumno = await buscarAlumnoPorDni(dni);  
+                setOpenedAlumnos(idAlumno);
+            }
+        }
+        data();
+    }, []);
 
     const cargar = async (page) => {
         try {
@@ -132,7 +147,9 @@ export default function AlumnoPanel({ dni, limpiarDni }) {
                     onChange={(e) => filtrar(e.target.value)}
                     className="w-full p-3 rounded-xl border border-color2 focus:ring-2 focus:ring-color3 outline-none transition-all shadow-soft text-color5 text-sm"
                 />
+                <p className="text-sm text-gray-500"> Alumnos encontrados: {filtroAlumnos.length === 0 ? todasAlumnos.length : alumnosFiltradasPagina.length}</p>
             </div>
+            
 
             <div className="space-y-4">
                 {alumnosFiltradasPagina.length > 0 ? (
@@ -146,6 +163,8 @@ export default function AlumnoPanel({ dni, limpiarDni }) {
                                 cargar(pagActual);
                                 cargarTodas();
                             }}
+                            guardarIdCurso={guardarIdCurso}
+                            guardarHayEdicion={guardarHayEdicion}
                         />
                     ))
                 ) : (

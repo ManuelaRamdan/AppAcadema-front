@@ -75,7 +75,7 @@ export default function CrearAlumno({ isOpen, onClose, onExito }) {
             await createAlumno(data);
             setNotificationMessage({ type: 'success', message: 'Se guardó exitosamente' });
             reset();
-            setTimeout(() => onExito(), 1500);
+            setTimeout(() => onExito(), 3000);
         } catch (err) {
             const mensaje = err?.response?.data?.error || err?.response?.data?.message || "Error al crear usuario";
             setNotificationMessage({ type: 'error', message: mensaje });

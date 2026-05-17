@@ -84,6 +84,7 @@ export default function PadrePanelAdmin({guardarDni}) {
                     onChange={(e) => filtrar(e.target.value)}
                     className="w-full p-3 rounded-xl border border-color2 focus:ring-2 focus:ring-color3 outline-none transition-all shadow-soft text-color5 text-sm"
                 />
+                <p className="text-sm text-gray-500"> Padres encontrados: {filtroUsuario.length === 0 ? todosUsuarios.length : usuariosFiltradasPagina.length}</p>
             </div>
 
             <div className="space-y-4">
