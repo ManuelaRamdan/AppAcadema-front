@@ -23,7 +23,7 @@ export default function UsuarioAcordeon({ usuario, isOpen, onToggle, guardarDni 
 
     useEffect(() => {
         cargar();
-    }, [usuario.hijos]);
+    }, [JSON.stringify(usuario.hijos)]);
 
 
     return (
