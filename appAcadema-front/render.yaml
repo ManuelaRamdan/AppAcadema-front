@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: appacadema-front
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./appAcadema-front/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

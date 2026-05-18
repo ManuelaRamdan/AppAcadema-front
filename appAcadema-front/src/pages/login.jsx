@@ -29,6 +29,7 @@ export function Login() {
         if (sessionExpired) {
             logout(false);// logout sin aviso
         }
+        window.history.pushState(null, "", window.location.href);
 
     }, [logout]);
 

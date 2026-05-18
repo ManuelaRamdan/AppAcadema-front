@@ -46,17 +46,9 @@ export default function ProfesorPanel() {
     }
 
     const seleccionarMateria = (m) => {
-        try {
-            setLoading(true);
-            setMateriaSelecccionada(m);
-            setAlumnos(m.alumnos || []);
-            setMenuAbierto(false);
-        } catch {
-            setError("No se pudieron cargar la materia");
-        } finally {
-            setLoading(false);
-
-        }
+        setMateriaSelecccionada(m);
+        setAlumnos(m.alumnos || []);
+        setMenuAbierto(false);
     }
 
 
@@ -113,7 +105,7 @@ export default function ProfesorPanel() {
                             className="w-full p-3 rounded-xl border border-color2 focus:ring-2 focus:ring-color3 outline-none transition-all shadow-soft text-color5 text-sm"
                         />
 
-                        <div className="space-y-2 mt-6 overflow-y-auto flex-1 mb-4 max-h-[60vh] md:max-h-none pr-2">
+                        <div className="space-y-2 mt-6 overflow-y-auto flex-1 mb-4 max-h-[60vh] md:max-h-[calc(100vh-250px)] pr-2">
 
                             {materiasFiltradas.length === 0 && (
                                 <p className="text-center py-10 text-gray-500 font-medium">No se encontraron materias.</p>
@@ -151,7 +143,7 @@ export default function ProfesorPanel() {
 
 
                             <AlumnoMateria
-                                key={profesor._id}
+                                key={materiaSelecccionada._id}
                                 materiaSeleccionada={materiaSelecccionada}
                                 profesor={profesor}
                             />
