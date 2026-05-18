@@ -13,6 +13,8 @@ export default function ProfesorPanel({ idCurso, limpiarIdCurso }) {
     const [loading, setLoading] = useState(true);
     const [openedProfesores, setOpenedProfesores] = useState(null);
     const [filtroProfesores, setFiltroProfesores] = useState("");
+    const [idCursoBuscar, setIdCursoBuscar] = useState(idCurso);
+
 
     const cargar = async (page) => {
         try {
@@ -23,9 +25,7 @@ export default function ProfesorPanel({ idCurso, limpiarIdCurso }) {
             setPaginacion(res.data.pagination);
         } catch {
             setError("No se pudieron cargar los profesores");
-        } finally {
-            setLoading(false);
-        }
+        } 
     }
 
     const cargarTodas = async () => {
@@ -34,8 +34,6 @@ export default function ProfesorPanel({ idCurso, limpiarIdCurso }) {
             setTodasProfesores(res.data.profesores);
         } catch {
             setError("No se pudieron cargar los profesores");
-        } finally {
-            setLoading(false);
         }
     }
 
@@ -75,6 +73,8 @@ export default function ProfesorPanel({ idCurso, limpiarIdCurso }) {
     useEffect(() => {
 
         async function data() {
+            setLoading(true);
+
             await cargar();
             await cargarTodas();
             if (idCurso) {
@@ -82,6 +82,9 @@ export default function ProfesorPanel({ idCurso, limpiarIdCurso }) {
                 await filtrar(idCurso);
                 limpiarIdCurso();
             }
+            //console.log(idCurso + "id curso panel ");
+            setLoading(false);
+
         }
         data();
 
@@ -120,7 +123,7 @@ export default function ProfesorPanel({ idCurso, limpiarIdCurso }) {
                                 profesor={profe}
                                 isOpen={openedProfesores === profe._id}
                                 onToggle={() => setOpenedProfesores((prev) => prev === profe._id ? null : profe._id)}
-                                idCurso={idCurso}
+                                idCurso={idCursoBuscar}
                             />
                         ))
                     ) : (

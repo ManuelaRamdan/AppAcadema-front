@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SeccionNotas from "../../Alumno/SeccionNotas";
 import SeccionAsistencias from "../../Alumno/SeccionAsistencias";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
@@ -17,6 +17,8 @@ export default function MateriaProfesorDetalle({ materiaCurso, alumnoId, guardar
         asistencias: materiaCurso.asistencias
     });
 
+            const notifiRef = useRef(null);
+
     useEffect(() => {
         guardarHayEdicion(editMode);
     }, [editMode]);
@@ -34,6 +36,7 @@ export default function MateriaProfesorDetalle({ materiaCurso, alumnoId, guardar
 
     useEffect(() => {
         if (notificationMessage.message) {
+            notifiRef.current.scrollIntoView({ behavior: "smooth" });
             const timer = setTimeout(() => {
                 setNotificationMessage({ type: '', message: '' });
             }, 3000);
@@ -116,7 +119,7 @@ export default function MateriaProfesorDetalle({ materiaCurso, alumnoId, guardar
             {isOpen && (
                 <div className="p-4 md:p-6 bg-white animate-fadeIn">
                     {notificationMessage.message && (
-                        <div className={getNotificationClass(notificationMessage.type)}>
+                        <div className={getNotificationClass(notificationMessage.type)} ref={notifiRef}>
                             {notificationMessage.message}
                         </div>
                     )}

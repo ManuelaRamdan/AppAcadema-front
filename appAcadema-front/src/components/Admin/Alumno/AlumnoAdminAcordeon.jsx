@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
@@ -11,7 +11,7 @@ export default function AlumnoAdminAcordeon({ alumno, isOpen, onToggle, onElimin
     const [dni, setDni] = useState("");
     const [confirmarEliminar, setConfirmarEliminar] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState({ type: '', message: '' });
-
+        const notifiRef = useRef(null);
 
     const [datosTemporales, setDatosTemporales] = useState({
         nombre: alumno.nombre,
@@ -36,6 +36,7 @@ export default function AlumnoAdminAcordeon({ alumno, isOpen, onToggle, onElimin
 
     useEffect(() => {
         if (notificationMessage.message) {
+            notifiRef.current.scrollIntoView({ behavior: "smooth" });
             const timer = setTimeout(() => {
                 setNotificationMessage({ type: '', message: '' });
             }, 3000);
@@ -104,7 +105,7 @@ export default function AlumnoAdminAcordeon({ alumno, isOpen, onToggle, onElimin
                 onClick={onToggle}
                 className={`p-3 md:p-4 cursor-pointer transition-colors flex justify-between items-center ${isOpen ? "bg-color2" : "bg-color4 hover:bg-color2"}`}
             >
-                <span className="font-bold text-color5">{alumno.nombre}</span>
+                <span className="font-bold text-color5">{datosTemporales.nombre}</span>
                 <span className="text-color5">{isOpen ? '▲' : '▼'}</span>
 
             </div>
@@ -112,7 +113,7 @@ export default function AlumnoAdminAcordeon({ alumno, isOpen, onToggle, onElimin
             {isOpen && (
                 <div className="p-4 md:p-6 bg-white animate-fadeIn">
                     {notificationMessage.message && (
-                        <div className={getNotificationClass(notificationMessage.type)}>
+                        <div className={getNotificationClass(notificationMessage.type)} ref={notifiRef}>
                             {notificationMessage.message}
                         </div>
                     )}

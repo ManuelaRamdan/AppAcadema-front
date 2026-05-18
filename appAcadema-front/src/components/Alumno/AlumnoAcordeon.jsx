@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import SeccionNotas from "./SeccionNotas";
 import SeccionAsistencias from "./SeccionAsistencias";
@@ -13,7 +13,7 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
 
     const [notificationMessage, setNotificationMessage] = useState({ type: '', message: '' });
 
-
+    const notifiRef = useRef(null);
     const [datosTemporales, setDatosTemporales] = useState({
         notas: alumno.notas,
         asistencias: alumno.asistencias
@@ -44,18 +44,19 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
             try {
                 await actualizarNotasAsistenciasDelAlumno(alumno.dni, payload);
                 setNotificationMessage({ type: 'success', message: 'Se guardo exitosamente' });
+                notifiRef.current.scrollIntoView({ behavior: "smooth" });
                 setEditMode(false);
             } catch (err) {
                 //console.log(err.response);
                 setNotificationMessage({ type: 'error', message: 'Hubo un error al guardarlo' });
-
+                
             }
         }
-
-
-
+        
+        
+        
     }
-
+    
     const handleCancelar = () => {
         setDatosTemporales({
             notas: alumno.notas,
@@ -78,6 +79,7 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
 
     useEffect(() => {
         if (notificationMessage.message) {
+            notifiRef.current.scrollIntoView({ behavior: "smooth" });
             const timer = setTimeout(() => {
                 setNotificationMessage({ type: '', message: '' });
             }, 3000);
@@ -111,7 +113,7 @@ export default function AlumnoAcordeon({ alumno, materiaSeleccionada }) {
 
 
                     {notificationMessage.message && (
-                        <div className={getNotificationClass(notificationMessage.type)}>
+                        <div className={getNotificationClass(notificationMessage.type)} ref={notifiRef}>
                             {notificationMessage.message}
                         </div>
                     )}
