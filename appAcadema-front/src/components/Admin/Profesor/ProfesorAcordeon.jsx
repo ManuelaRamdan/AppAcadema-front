@@ -11,6 +11,7 @@ export default function ProfesorAcordeon({ profesor, isOpen, onToggle, idCurso }
         }
     }, [idCurso]);
 
+
     return (
         <div className="border-2 border-color2 rounded-2xl overflow-hidden shadow-soft">
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Loading from "../../Loading";
 import { createUsuario, getAllUsuarios } from "../../../services/usuarioService";
 import { getAllAlumnos } from "../../../services/alumnoService";
@@ -20,9 +20,9 @@ export default function CrearUsuario({ isOpen, onClose, onExito }) {
     const [filtroAlumno, setFiltroAlumno] = useState("");
     const [filtroProfe, setFiltroProfe] = useState("");
     const [notificationMessage, setNotificationMessage] = useState({ type: '', message: '' });
-    const [profesFiltrados, setProfesoresFiltrados] = useState([]); 
-    
+    const [profesFiltrados, setProfesoresFiltrados] = useState([]);
 
+    const notifiRef = useRef(null);
 
 
     const getNotificationClass = (type) => {
@@ -38,6 +38,7 @@ export default function CrearUsuario({ isOpen, onClose, onExito }) {
 
     useEffect(() => {
         if (notificationMessage.message) {
+            notifiRef.current.scrollIntoView({ behavior: "smooth" });
             const timer = setTimeout(() => {
                 setNotificationMessage({ type: '', message: '' });
             }, 3000);
@@ -159,7 +160,7 @@ export default function CrearUsuario({ isOpen, onClose, onExito }) {
     const isMongoId = (texto) => {
         return texto.length === 24 && /^[0-9a-fA-F]+$/.test(texto);
     }
-    
+
     return isOpen ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-color5/40 backdrop-blur-sm p-4">
             <div className="bg-color1 w-full max-w-md rounded-[2rem] p-8 shadow-2xl border-4 border-white transform transition-all overflow-y-auto max-h-[90vh]">
@@ -167,7 +168,7 @@ export default function CrearUsuario({ isOpen, onClose, onExito }) {
                 <h2 className="text-color5 text-2xl font-bold mb-6 text-center">Crear usuario</h2>
 
                 {notificationMessage.message && (
-                    <div className={getNotificationClass(notificationMessage.type)}>
+                    <div className={getNotificationClass(notificationMessage.type)} ref={notifiRef}>
                         {notificationMessage.message}
                     </div>
                 )}
@@ -273,9 +274,9 @@ export default function CrearUsuario({ isOpen, onClose, onExito }) {
                                     >
                                         <option value="">Seleccione...</option>
                                         {profesFiltrados.map((a) => (
-                                                <option key={a._id} value={a._id}>{a.nombre}</option>
-                                                
-                                            
+                                            <option key={a._id} value={a._id}>{a.nombre}</option>
+
+
                                         ))}
 
                                     </select>
@@ -291,14 +292,17 @@ export default function CrearUsuario({ isOpen, onClose, onExito }) {
                         <button
                             type="button"
                             className="px-6 py-2 rounded-lg font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
-                            onClick={onClose}
+                            onClick={() => {
+                                reset();
+                                onClose();
+                            }}
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
                             className="px-6 py-2 rounded-lg font-semibold bg-color3 text-white hover:bg-opacity-90 transition-colors"
-                            
+
                         >
                             Enviar
                         </button>
