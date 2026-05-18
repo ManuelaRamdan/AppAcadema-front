@@ -18,19 +18,7 @@ export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso, guardarHa
     const [pagActual, setPagActual] = useState(1);
 
 
-    useEffect(() => {
-        async function data() {
-            const buscarAlumnoPorDni = async (dni) => {
-                const res = await getAlumnoByDni(dni);
-                return res.data._id;
-            }
-            if (dni) {
-                const idAlumno = await buscarAlumnoPorDni(dni);  
-                setOpenedAlumnos(idAlumno);
-            }
-        }
-        data();
-    }, []);
+   
 
     const cargar = async (page) => {
         try {
@@ -42,9 +30,7 @@ export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso, guardarHa
             setPaginacion(res.data.pagination);
         } catch {
             setError("No se pudieron cargar los Alumnos");
-        } finally {
-            setLoading(false);
-        }
+        } 
     }
 
     const cargarTodas = async () => {
@@ -54,9 +40,7 @@ export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso, guardarHa
             //console.log(todasCursos);
         } catch {
             setError("No se pudieron cargar los Alumnos");
-        } finally {
-            setLoading(false);
-        }
+        } 
     }
 
     const filtrar = async (texto) => {
@@ -96,13 +80,23 @@ export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso, guardarHa
     useEffect(() => {
 
         async function data() {
+
             await cargar();
             await cargarTodas();
+            const buscarAlumnoPorDni = async (dni) => {
+                const res = await getAlumnoByDni(dni);
+                
+                return res.data._id;
+            }
             if (dni) {
+                const idAlumno = await buscarAlumnoPorDni(dni);
+                setOpenedAlumnos(idAlumno);
                 setFiltroAlumnos(dni);
                 await filtrar(dni);
+                
                 limpiarDni();
             }
+            setLoading(false);
         }
         data();
 
@@ -110,7 +104,6 @@ export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso, guardarHa
 
 
 
-    if (loading) return <Loading fullScreen />;
     if (error) return <p className="error text-red-500 font-bold p-4 text-center">{error}</p>;
 
     return (
@@ -149,29 +142,33 @@ export default function AlumnoPanel({ dni, limpiarDni, guardarIdCurso, guardarHa
                 />
                 <p className="text-sm text-gray-500"> Alumnos encontrados: {filtroAlumnos.length === 0 ? todasAlumnos.length : alumnosFiltradasPagina.length}</p>
             </div>
-            
+
+
 
             <div className="space-y-4">
-                {alumnosFiltradasPagina.length > 0 ? (
-                    alumnosFiltradasPagina.map((alumno) => (
-                        <AlumnoAdminAcordeon
-                            key={alumno._id}
-                            alumno={alumno}
-                            isOpen={openedAlumnos === alumno._id}
-                            onToggle={() => setOpenedAlumnos((prev) => prev === alumno._id ? null : alumno._id)}
-                            onEliminar={() => {
-                                cargar(pagActual);
-                                cargarTodas();
-                            }}
-                            guardarIdCurso={guardarIdCurso}
-                            guardarHayEdicion={guardarHayEdicion}
-                        />
-                    ))
-                ) : (
-                    <p className="text-center py-10 text-gray-500 font-medium">
-                        No se encontraron usuarios para la búsqueda "{filtroAlumnos}".
-                    </p>
+                {loading ? (<Loading fullScreen />) : (
+                    alumnosFiltradasPagina.length > 0 ? (
+                        alumnosFiltradasPagina.map((alumno) => (
+                            <AlumnoAdminAcordeon
+                                key={alumno._id}
+                                alumno={alumno}
+                                isOpen={openedAlumnos === alumno._id}
+                                onToggle={() => setOpenedAlumnos((prev) => prev === alumno._id ? null : alumno._id)}
+                                onEliminar={() => {
+                                    cargar(pagActual);
+                                    cargarTodas();
+                                }}
+                                guardarIdCurso={guardarIdCurso}
+                                guardarHayEdicion={guardarHayEdicion}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-center py-10 text-gray-500 font-medium">
+                            No se encontraron usuarios para la búsqueda "{filtroAlumnos}".
+                        </p>
+                    )
                 )}
+
             </div>
 
             {filtroAlumnos.length === 0 && paginacion && (

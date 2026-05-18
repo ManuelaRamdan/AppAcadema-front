@@ -3,7 +3,7 @@ import Loading from "../../Loading";
 import { getAllCursos, getCursoById, getCursoByIdProfe } from "../../../services/cursoService";
 import CursoAcordeon from "./CursoAcordeon";
 
-export default function CursoPanel({idCurso, limpiarIdCurso}) {
+export default function CursoPanel({ idCurso, limpiarIdCurso }) {
 
     const [cursos, setCursos] = useState([]);
     const [cursosFiltradasPagina, setCursosFiltradasPagina] = useState([]);
@@ -18,7 +18,7 @@ export default function CursoPanel({idCurso, limpiarIdCurso}) {
         try {
             const res = await getAllCursos(page);
             setCursos(res.data.cursos);
-            
+
             setCursosFiltradasPagina(res.data.cursos);
             setPaginacion(res.data.pagination);
         } catch {
@@ -49,11 +49,11 @@ export default function CursoPanel({idCurso, limpiarIdCurso}) {
             try {
                 let res = await getCursoById(texto);
                 setCursosFiltradasPagina([res.data]);
-                
+
             } catch (err) {
                 try {
                     let res = await getCursoByIdProfe(texto);
-                   // console.log(res.data);
+                    // console.log(res.data);
                     setCursosFiltradasPagina(res.data);
                 } catch (err) {
                     setCursosFiltradasPagina([]);
@@ -90,7 +90,6 @@ export default function CursoPanel({idCurso, limpiarIdCurso}) {
 
     }, []);
 
-    if (loading) return <Loading fullScreen />;
     if (error) return <p className="error text-red-500 font-bold p-4 text-center">{error}</p>;
 
     return (
@@ -114,22 +113,26 @@ export default function CursoPanel({idCurso, limpiarIdCurso}) {
 
             </div>
 
-            <div className="space-y-4">
-                {cursosFiltradasPagina.length > 0 ? (
-                    cursosFiltradasPagina.map((curso) => (
-                        <CursoAcordeon
-                            key={curso._id}
-                            curso={curso}
-                            isOpen={openedCursos === curso._id}
-                            onToggle={() => setOpenedCursos((prev) => prev === curso._id ? null : curso._id)}
-                        />
-                    ))
-                ) : (
-                    <p className="text-center py-10 text-gray-500 font-medium">
-                        No se encontraron cursos para la búsqueda "{filtroCursos}".
-                    </p>
-                )}
-            </div>
+            {loading ? (<Loading fullScreen />) : (
+
+                <div className="space-y-4">
+                    {cursosFiltradasPagina.length > 0 ? (
+                        cursosFiltradasPagina.map((curso) => (
+                            <CursoAcordeon
+                                key={curso._id}
+                                curso={curso}
+                                isOpen={openedCursos === curso._id}
+                                onToggle={() => setOpenedCursos((prev) => prev === curso._id ? null : curso._id)}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-center py-10 text-gray-500 font-medium">
+                            No se encontraron cursos para la búsqueda "{filtroCursos}".
+                        </p>
+                    )}
+                </div>
+            )}
+
 
             {filtroCursos.length === 0 && paginacion && (
                 <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-gray-100">

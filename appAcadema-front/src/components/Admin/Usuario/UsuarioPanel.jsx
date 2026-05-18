@@ -4,7 +4,7 @@ import { getUsuarioById, createUsuario, getAllUsuarios } from "../../../services
 import UsuarioAcordeon from "./UsuarioAcordeon";
 import CrearUsuario from "./CrearUsuario";
 
-export default function UsuarioPanel({guardarDni}) {
+export default function UsuarioPanel({ guardarDni }) {
 
     const [usuarios, setUsuarios] = useState([]);
     const [usuariosFiltradasPagina, setUsuariosFiltradasPagina] = useState([]);
@@ -77,7 +77,6 @@ export default function UsuarioPanel({guardarDni}) {
         cargarTodas();
     }, []);
 
-    if (loading) return <Loading fullScreen />;
     if (error) return <p className="error text-red-500 font-bold p-4 text-center">{error}</p>;
 
     return (
@@ -87,7 +86,7 @@ export default function UsuarioPanel({guardarDni}) {
                 <h1 className="text-2xl md:text-3xl font-bold text-color3 text-center">
                     Gestión Usuarios
                 </h1>
-                <button 
+                <button
                     onClick={() => setOpenModal(true)}
                     className="bg-color3 text-white font-bold py-2 px-6 rounded-full hover:bg-opacity-90 transition-all shadow-custom border-2 border-color5/10 text-sm md:text-base"
                 >
@@ -118,23 +117,28 @@ export default function UsuarioPanel({guardarDni}) {
                 <p className="text-sm text-gray-500"> Usuarios encontrados: {filtroUsuarios.length === 0 ? todasUsuarios.length : usuariosFiltradasPagina.length}</p>
             </div>
 
-            <div className="space-y-4">
-                {usuariosFiltradasPagina.length > 0 ? (
-                    usuariosFiltradasPagina.map((usuario) => (
-                        <UsuarioAcordeon
-                            key={usuario._id}
-                            usuario={usuario}
-                            isOpen={openedUsuarios === usuario._id}
-                            onToggle={() => setOpenedUsuarios((prev) => prev === usuario._id ? null : usuario._id)}
-                            guardarDni={guardarDni}
-                        />
-                    ))
-                ) : (
-                    <p className="text-center py-10 text-gray-500 font-medium">
-                        No se encontraron usuarios para la búsqueda "{filtroUsuarios}".
-                    </p>
-                )}
-            </div>
+            {loading ? (<Loading fullScreen />) : (
+
+
+                <div className="space-y-4">
+                    {usuariosFiltradasPagina.length > 0 ? (
+                        usuariosFiltradasPagina.map((usuario) => (
+                            <UsuarioAcordeon
+                                key={usuario._id}
+                                usuario={usuario}
+                                isOpen={openedUsuarios === usuario._id}
+                                onToggle={() => setOpenedUsuarios((prev) => prev === usuario._id ? null : usuario._id)}
+                                guardarDni={guardarDni}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-center py-10 text-gray-500 font-medium">
+                            No se encontraron usuarios para la búsqueda "{filtroUsuarios}".
+                        </p>
+                    )}
+                </div>
+            )}
+
 
             {filtroUsuarios.length === 0 && paginacion && (
                 <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-gray-100">

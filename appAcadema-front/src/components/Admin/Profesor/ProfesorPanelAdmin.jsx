@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Loading from "../../Loading";
-import { getAllProfesores, getProfesorById, getProfesorByIdCurso} from "../../../services/profeService";
+import { getAllProfesores, getProfesorById, getProfesorByIdCurso } from "../../../services/profeService";
 import ProfesorAcordeon from "./ProfesorAcordeon";
 
-export default function ProfesorPanel({idCurso, limpiarIdCurso}) {
+export default function ProfesorPanel({ idCurso, limpiarIdCurso }) {
 
     const [profesores, setProfesores] = useState([]);
     const [profesoresFiltradasPagina, setProfesoresFiltradasPagina] = useState([]);
@@ -87,7 +87,6 @@ export default function ProfesorPanel({idCurso, limpiarIdCurso}) {
 
     }, []);
 
-    if (loading) return <Loading fullScreen />;
     if (error) return <p className="error text-red-500 font-bold p-4 text-center">{error}</p>;
 
     return (
@@ -111,23 +110,28 @@ export default function ProfesorPanel({idCurso, limpiarIdCurso}) {
 
             </div>
 
-            <div className="space-y-4">
-                {profesoresFiltradasPagina.length > 0 ? (
-                    profesoresFiltradasPagina.map((profe) => (
-                        <ProfesorAcordeon
-                            key={profe._id}
-                            profesor={profe}
-                            isOpen={openedProfesores === profe._id}
-                            onToggle={() => setOpenedProfesores((prev) => prev === profe._id ? null : profe._id)}
-                            idCurso={idCurso}
-                        />
-                    ))
-                ) : (
-                    <p className="text-center py-10 text-gray-500 font-medium">
-                        No se encontraron profesores para la búsqueda "{filtroProfesores}".
-                    </p>
-                )}
-            </div>
+            {loading ? (<Loading fullScreen />) : (
+
+                <div className="space-y-4">
+                    {profesoresFiltradasPagina.length > 0 ? (
+                        profesoresFiltradasPagina.map((profe) => (
+                            <ProfesorAcordeon
+                                key={profe._id}
+                                profesor={profe}
+                                isOpen={openedProfesores === profe._id}
+                                onToggle={() => setOpenedProfesores((prev) => prev === profe._id ? null : profe._id)}
+                                idCurso={idCurso}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-center py-10 text-gray-500 font-medium">
+                            No se encontraron profesores para la búsqueda "{filtroProfesores}".
+                        </p>
+                    )}
+                </div>
+
+            )}
+
 
             {filtroProfesores.length === 0 && paginacion && (
                 <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-gray-100">

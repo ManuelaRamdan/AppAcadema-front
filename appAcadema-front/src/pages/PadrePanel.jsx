@@ -50,7 +50,6 @@ export default function PadrePanel() {
 
     useEffect(() => { cargar(); }, []);
 
-    if (loading && !alumno) return <Loading fullScreen />;
     if (error) return <p>{error}</p>;
 
 
@@ -96,7 +95,7 @@ export default function PadrePanel() {
                         </div>
                     </div>
                     <button onClick={logout}
-                        className="bg-color3 hover:bg-opacity-90 text-white py-2 px-4 rounded-lg font-bold transition-all w-full"
+                        className="bg-color3 hover:bg-opacity-90 text-black py-2 px-4 rounded-lg font-bold transition-all w-full"
                     >Cerrar Sesión</button>
                 </aside>
 

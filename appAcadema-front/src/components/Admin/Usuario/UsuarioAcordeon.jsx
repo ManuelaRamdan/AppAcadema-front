@@ -1,15 +1,20 @@
 import { getAllAlumnos } from "../../../services/alumnoService";
 import { useEffect, useState } from "react";
+import Loading from "../../Loading";
 
 export default function UsuarioAcordeon({ usuario, isOpen, onToggle, guardarDni }) {
     const [alumnos, setAlumnos] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const cargar = async (page) => {
         try {
+            setLoading(true);
             const res = await getAllAlumnos(page);
             setAlumnos(res.data.alumnos);
         } catch {
             setError("No se pudieron cargar los Alumnos");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -52,16 +57,24 @@ export default function UsuarioAcordeon({ usuario, isOpen, onToggle, guardarDni 
                     {usuario.hijos && (
                         <div className="text-color5 font-medium mb-4">
                             <strong>DNI de Hijos Asociados:</strong>
-                            {usuario.hijos.length > 0 ? (
-                                <ul className="list-disc ml-6 mt-2">
-                                    {hijosUsuario.map((h) => (
-                                        <li key={h.dni} onClick={() => guardarDni(h.dni)}
-                                        className="text-blue-500 underline cursor-pointer">{h.nombre} - {h.dni}</li>
-                                    ))}
-                                </ul>
+                            {loading ? (
+                                <Loading fullScreen />
                             ) : (
-                                <p className="text-center py-10 text-gray-500 font-medium">Ningún hijo asociado</p>
+                                
+                                    usuario.hijos.length > 0 ? (
+                                        <ul className="list-disc ml-6 mt-2">
+
+                                            {hijosUsuario.map((h) => (
+                                                <li key={h.dni} onClick={() => guardarDni(h.dni)}
+                                                    className="text-blue-500 underline cursor-pointer">{h.nombre} - {h.dni}</li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p className="text-center py-10 text-gray-500 font-medium">Ningún hijo asociado</p>
+                                    )
+                                
                             )}
+
                         </div>
                     )}
                 </div>
