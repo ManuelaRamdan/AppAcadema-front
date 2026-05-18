@@ -23,9 +23,7 @@ export default function CursoPanel({ idCurso, limpiarIdCurso }) {
             setPaginacion(res.data.pagination);
         } catch {
             setError("No se pudieron cargar los cursos");
-        } finally {
-            setLoading(false);
-        }
+        } 
     }
 
     const cargarTodas = async () => {
@@ -35,9 +33,7 @@ export default function CursoPanel({ idCurso, limpiarIdCurso }) {
             console.log(todasCursos);
         } catch {
             setError("No se pudieron cargar los cursos");
-        } finally {
-            setLoading(false);
-        }
+        } 
     }
 
     const filtrar = async (texto) => {
@@ -77,6 +73,7 @@ export default function CursoPanel({ idCurso, limpiarIdCurso }) {
     useEffect(() => {
 
         async function data() {
+            setLoading(true);
             await cargar();
             await cargarTodas();
             if (idCurso) {
@@ -85,6 +82,7 @@ export default function CursoPanel({ idCurso, limpiarIdCurso }) {
                 limpiarIdCurso();
                 setOpenedCursos(idCurso);
             }
+            setLoading(false);
         }
         data();
 
