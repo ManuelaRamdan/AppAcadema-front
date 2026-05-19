@@ -99,7 +99,6 @@ appAcadema-front/
 │   │   └── usuarioService.js      # Peticiones relacionadas con usuarios
 │   │
 │   ├── index.css                  # Estilos globales e importación de Tailwind
-│   ├── App.jsx                    # Componente raíz: monta el router y los providers
 │   └── main.jsx                   # Punto de entrada: renderiza App en el DOM
 │
 ├── .env                           # Variables de entorno (no subir al repo)
@@ -114,55 +113,54 @@ appAcadema-front/
 ```
  
 ### Responsabilidad de cada carpeta
- 
+
 | Carpeta | Responsabilidad |
 |---------|----------------|
-| `public/` | Archivos estáticos que se sirven tal cual, sin pasar por el bundler (logo, favicon) |
+| `public/` | Archivos estáticos que se copian tal cual al build final sin ser procesados (logo, favicon) |
 | `components/` | Piezas de UI reutilizables e independientes del negocio. Se usan en múltiples páginas |
 | `context/` | Maneja el estado global de autenticación (token JWT, datos del usuario, rol) usando Context API de React |
 | `pages/` | Vistas completas asociadas a una ruta. Cada archivo agrupa la UI y lógica de un panel por rol |
 | `router/` | Define qué componente se renderiza según la URL e implementa la protección de rutas por rol |
 | `services/` | Centraliza todas las llamadas HTTP al backend con Axios. Cada archivo corresponde a una entidad del sistema |
- 
 ---
  
 ## Librerías utilizadas
  
 ### Dependencias de producción
  
-#### `react` v19.2.0 y `react-dom` v19.2.0
+#### `react` y `react-dom` 
 Biblioteca principal para construir la interfaz de usuario. Permite dividir la UI en **componentes reutilizables** y gestionar su estado con hooks. `react-dom` es el puente entre React y el navegador, encargado de renderizar los componentes en el DOM.
  
 ---
  
-#### `react-router-dom` v7.13.1
-Gestiona la navegación y las rutas de la aplicación. Permite definir qué página se muestra según la URL. Se usa `BrowserRouter` como contenedor, `Routes` y `Route` para definir las rutas, `Navigate` para redirecciones y `useNavigate` para navegar desde el código.
+#### `react-router-dom` 
+Gestiona la navegación y las rutas de la aplicación. Permite definir qué página se muestra según la URL. Se usa `BrowserRouter` como contenedor, `Routes` y `Route` para definir las rutas y `useNavigate` para navegar desde el código.
 
 ---
  
 #### `axios` (en `services/api.js`)
-Cliente HTTP para realizar peticiones a la API del backend. En `services/api.js` se configura una instancia base con la URL del backend proveniente de la variable de entorno, evitando repetir esa configuración en cada servicio.
+Librería de JavaScript para hacer peticiones HTTP al backend. En `services/api.js` se configura una instancia base con la URL del backend, evitando repetir esa configuración en cada servicio.
  
 ---
  
-#### `react-icons` v5.6.0
+#### `react-icons`
 Colección de íconos vectoriales (SVG) de múltiples sets populares listos para usar como componentes de React. En el proyecto se usan íconos de **Font Awesome** para las acciones de editar y eliminar en las tablas del panel de administración.
  
 ---
  
-#### `react-loader-spinner` v8.0.2
+#### `react-loader-spinner` 
 Provee componentes de carga animados (spinners) para mostrar al usuario que una operación asíncrona está en proceso. Se usa el spinner `TailSpin`, encapsulado en el componente `Loading.jsx` para reutilizarlo en toda la app.
  
 ---
  
 ### Dependencias de desarrollo
  
-#### `vite` v7.3.1
-Herramienta de construcción y desarrollo frontend que permite crear y ejecutar proyectos de React de forma rápida, evitando empaquetar todo el código en cada renderizado.
+#### `vite` 
+Herramienta de construcción y desarrollo frontend que permite crear y ejecutar proyectos de React de forma rápida, evitando recompilar todo el proyecto ante cada cambio.
  
 ---
  
-#### `tailwindcss` v3.4.19
+#### `tailwindcss` 
 Framework de CSS utilitario. En lugar de escribir clases CSS propias, se aplican clases predefinidas directamente en el JSX.
 
 ---
