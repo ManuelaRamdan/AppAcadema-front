@@ -77,7 +77,7 @@ export default function MateriaProfesorDetalle({ materiaCurso, isOpen, onToggle 
                                                                         {alumno.notas.map(n => (
                                                                             <tr key={n._id} className="hover:bg-slate-50 transition-colors">
                                                                                 <td className="p-2 text-gray-600 italic">{n.tipo}</td>
-                                                                                <td className="p-2 font-bold text-color5">{n.nota}</td> {/* Quitamos pr-10 y text-right */}
+                                                                                <td className="p-2 font-bold text-color5">{n.nota}</td>
                                                                             </tr>
                                                                         ))}
                                                                     </tbody>
@@ -107,7 +107,7 @@ export default function MateriaProfesorDetalle({ materiaCurso, isOpen, onToggle 
                                                                         {alumno.asistencias.map(a => (
                                                                             <tr key={a._id} className="hover:bg-slate-50 transition-colors">
                                                                                 <td className="p-2 text-gray-600">{getFixedDateDisplay(a.fecha)}</td>
-                                                                                <td className="p-2 font-medium text-color5">{a.presente}</td> {/* Quitamos pr-10 y text-right */}
+                                                                                <td className="p-2 font-medium text-color5">{a.presente}</td> 
                                                                             </tr>
                                                                         ))}
                                                                     </tbody>

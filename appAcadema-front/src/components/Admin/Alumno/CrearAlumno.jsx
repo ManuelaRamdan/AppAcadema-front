@@ -117,7 +117,10 @@ export default function CrearAlumno({ isOpen, onClose, onExito }) {
                 c.nombreMateria?.toLowerCase().includes(texto.toLowerCase()) ||
                 c.division?.toLowerCase().includes(texto.toLowerCase()) ||
                 c.profesor?.nombre?.toLowerCase().includes(texto.toLowerCase()) ||
-                c.alumnos?.some((a) => a.dni?.includes(texto.toLowerCase()))
+                c.alumnos?.some((a) => a.dni?.includes(texto.toLowerCase())) ||
+                String(c.anio ?? '').includes(texto) ||
+                (String(c.nivel ?? '') + (c.division ?? '').toLowerCase())
+                    .includes(texto.toLowerCase())
             ) || []);
         }
     }

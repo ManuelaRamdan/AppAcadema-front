@@ -23,7 +23,7 @@ export default function CursoPanel({ idCurso, limpiarIdCurso }) {
             setPaginacion(res.data.pagination);
         } catch {
             setError("No se pudieron cargar los cursos");
-        } 
+        }
     }
 
     const cargarTodas = async () => {
@@ -33,7 +33,7 @@ export default function CursoPanel({ idCurso, limpiarIdCurso }) {
             console.log(todasCursos);
         } catch {
             setError("No se pudieron cargar los cursos");
-        } 
+        }
     }
 
     const filtrar = async (texto) => {
@@ -60,7 +60,9 @@ export default function CursoPanel({ idCurso, limpiarIdCurso }) {
                 c.nombreMateria?.toLowerCase().includes(texto.toLowerCase()) ||
                 c.division?.toLowerCase().includes(texto.toLowerCase()) ||
                 c.profesor?.nombre?.toLowerCase().includes(texto.toLowerCase()) ||
-                c.alumnos?.some((a) => a.dni?.includes(texto.toLowerCase()))
+                c.alumnos?.some((a) => a.dni?.includes(texto.toLowerCase())) ||
+                String(c.anio ?? '').includes(texto) ||
+                (String(c.nivel ?? '') + (c.division ?? '').toLowerCase()).includes(texto.toLowerCase())
             ) || []);
         }
     }

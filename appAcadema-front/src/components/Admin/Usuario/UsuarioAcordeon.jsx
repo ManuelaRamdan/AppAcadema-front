@@ -54,7 +54,7 @@ export default function UsuarioAcordeon({ usuario, isOpen, onToggle, guardarDni 
                         <p className="text-color5 font-medium mb-4 break-all"><strong>ID Profesor:</strong> <span> {usuario.profesorId}</span></p>
                     )}
 
-                    {usuario.hijos && (
+                    {usuario.hijos.length > 0 && (
                         <div className="text-color5 font-medium mb-4">
                             <strong>DNI de Hijos Asociados:</strong>
                             {loading ? (
